@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from "recharts";
-import { AlertTriangle, TrendingUp, Zap, Target, Shield, CloudLightning, ShoppingCart, Mail, MessageSquare, DollarSign, Crosshair, TreePine, Package, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
+import { AlertTriangle, TrendingUp, Zap, Target, Shield, CloudLightning, ShoppingCart, Mail, MessageSquare, DollarSign, TreePine, Package, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 
-// ─── DATA: BAKED IN FROM APRIL 14 2026 RESEARCH ───────────────────────────────
+// ─── DATA: BAKED IN FROM MAY 15 2026 RESEARCH ─────────────────────────────────
 
-const SCAN_DATE = "April 14, 2026";
-const SCAN_WEEK = "Week of April 14–20, 2026";
+const SCAN_DATE = "May 15, 2026";
+const SCAN_WEEK = "Week of May 11–17, 2026";
+const TODAY_INDEX = 4; // Friday May 15 — index into weeklyCalendar
 
 const urgencyLevels = { CRITICAL: "🔴", HIGH: "🟠", MEDIUM: "🟡", WATCH: "🟢" };
 
@@ -16,88 +17,29 @@ const categories = [
     icon: "CloudLightning",
     urgency: "CRITICAL",
     color: "#ef4444",
-    heatScore: 97,
-    summary: "Active tornado outbreak across central US — Kansas, Missouri, Iowa, Minnesota, Wisconsin hit April 13. 14+ tornadoes confirmed. 12,000+ without power in east-central Kansas. NOAA warns repeated rounds of severe storms through April 16. Flash flood + hail risk elevated Texas to Great Lakes.",
-    sellingNow: [
-      "Emergency weather radios & NOAA scanners",
-      "Portable power stations & battery banks",
-      "Tarps, contractor bags, emergency shelter",
-      "First aid / trauma kits",
-      "Flashlights & lanterns (headlamps especially)",
-      "Water purification & storage containers",
-    ],
-    sellingNext: [
-      "Generator fuel stabilizer & accessories",
-      "Chainsaw supplies & cleanup gear",
-      "Long-term food storage kits (post-scare restocking)",
-      "Home reinforcement / storm prep kits",
-    ],
-    whyNext: "Storms forecast through April 16+ across Plains & Midwest. Post-event restocking cycle begins 48-72 hrs after each event. Families who were unprepared panic-buy after near-misses.",
-    marketingAngles: {
-      email: "Subject: 'Tornadoes hit Kansas — is your family ready?' — Feature storm prep bundles, weather radios, and 72-hr kits. Urgency-driven with real event footage/headlines.",
-      social: "Post storm damage photos (credited news sources) with 'Don't wait until it's your neighborhood' messaging. Reels showing bug-out bag builds in 60 seconds.",
-      ppc: "Bid up: 'emergency weather radio,' 'storm prep kit,' 'portable power station,' 'tornado survival kit.' Geo-target KS, MO, IA, MN, WI, IL, OK, TX.",
-      sms: "FLASH: Severe storms hitting the Midwest NOW. Storm-ready kits shipping same day → [link]. Limited stock.",
-    },
-  },
-  {
-    id: "shooting",
-    name: "Shooting & Ammo",
-    icon: "Crosshair",
-    urgency: "HIGH",
-    color: "#f97316",
-    heatScore: 91,
-    summary: "Major ammo price hikes effective April 1: Federal, CCI, Remington, Speer, Blazer, Fiocchi, HEVI-Shot, B&P all up 2-10%. Copper up 30% YoY after major mine closure. New tariffs hitting imports hard — PMC +25%, Prvi Partizan +37% (may exit US market). TSS turkey loads doubled due to China tariffs. Overall ammo prices 8-15% above early 2024.",
-    sellingNow: [
-      "Bulk 9mm, .223/5.56, .308 (buy-before-next-hike mentality)",
-      "Turkey shotshells — lead alternatives to expensive TSS",
-      "Winchester Long Beard XR (budget TSS alternative, under $25/box)",
-      "Reloading components & equipment",
-      "Defensive ammo (.380, .45 ACP, hollow points)",
-    ],
-    sellingNext: [
-      "More bulk buys as next price hike rumors circulate",
-      "20-gauge & .410 turkey loads (small-gauge trend)",
-      "6.5 Creedmoor & .300 Blackout (SHOT Show darlings)",
-      "Reloading presses & brass (cost-conscious shooters switching)",
-    ],
-    whyNext: "Manufacturers warned of possible mid-year re-pricing. Tariff uncertainty means import ammo could spike further or disappear. Shooters stockpile ahead of perceived shortages.",
-    marketingAngles: {
-      email: "Subject: 'Ammo prices just went up — here's how to stay ahead.' Price comparison tables (before/after April 1). Push bulk deals & reloading starter kits. Include 'lock in today's prices' urgency.",
-      social: "Carousel post: 'Ammo price increases by caliber — what you need to know.' Reel: '5 ways to shoot more for less in 2026.' Engage the reloading community.",
-      ppc: "Bid up: 'bulk 9mm ammo,' 'cheap 5.56 ammo,' 'ammo before price increase,' 'reloading kit,' 'turkey shotshells.' Negative KW: 'free ammo.'",
-      sms: "Ammo prices UP across all major brands. Lock in bulk pricing before the next hike → [link]. Free shipping on cases.",
-    },
-  },
-  {
-    id: "hunting",
-    name: "Hunting — Turkey / Fishing",
-    icon: "TreePine",
-    urgency: "HIGH",
-    color: "#f97316",
     heatScore: 88,
-    summary: "Spring turkey season ACTIVE across most states. Population rebound signals: 4 states expanded seasons, Indiana seeing record harvests, Arkansas up 22% over 2024. Small-gauge shotgun trend accelerating (20ga, 28ga, .410). Walleye fishing on Lake Erie expected to be world-class. TSS loads priced out of reach for many — budget alternatives surging.",
+    summary: "Active multi-round severe weather siege across the Plains and Midwest — enhanced risk over much of Iowa May 15, with a fresh round of strong-to-severe storms forecast for the northern Plains Saturday night into Sunday. 2026 is a front-loaded, exceptionally violent tornado year: Illinois alone passed 109 tornadoes by May 11, and an EF3 killed three in the Kankakee, IL / Lake Village, IN corridor. The May 18–22 pattern pairs continued Plains severe weather with an early-season East Coast heatwave.",
     sellingNow: [
-      "Turkey decoys — Avian-X Jake/Hen combos dominating",
-      "Mouth calls — WoodHaven brand trending",
-      "Turkey vests (Sitka Equinox, Optifade Subalpine)",
-      "Budget turkey loads (Winchester Long Beard XR)",
-      "Camo face masks, gloves, ground blinds",
-      "Spring fishing tackle — walleye jigs, crankbaits",
+      "NOAA weather radios & hand-crank emergency radios",
+      "Portable generators & fuel cans",
+      "Tarps, sandbags & emergency roof/window repair kits",
+      "Flashlights, lanterns & headlamps (plus batteries)",
+      "First aid / trauma kits",
+      "Storm-shelter bags & document protection cases",
     ],
     sellingNext: [
-      "Late-season turkey gear (states extending into May)",
-      "Small-gauge turkey choke tubes (20ga, .410)",
-      "Summer fishing gear ramp-up (bass, catfish)",
-      "Tick & insect repellent (warming temps)",
-      "Trail cameras for fall deer season scouting",
+      "Solar chargers & power banks (heatwave + outage prep)",
+      "Water storage containers & portable filtration",
+      "Coolers & ice substitutes (heatwave food preservation)",
+      "Rain gear, waterproof boots & ponchos",
+      "Battery-powered fans & cooling gear",
     ],
-    whyNext: "Turkey seasons running through April-May in most states. Late-season hunters gear up mid-April. Fishing transitions to warm-water species as water temps rise. Tick season coincides with turkey hunting in tall grass/woods.",
+    whyNext: "The May 18–22 pattern pairs continued Plains severe weather with an anomalous East Coast heatwave, shifting demand toward outage-survival-in-heat gear — cooling, power, water. The May 21 NOAA hurricane outlook will dominate headlines and trigger early coastal prep buying.",
     marketingAngles: {
-      email: "Subject: 'Turkey season is ON — are you set up for success?' Gear checklist format. Feature decoy combos, call bundles, and vest packages. Include state season date reference chart.",
-      social: "UGC campaign: 'Show us your gobbler' photo contest. TikTok/Reels: morning hunt vlogs, calling tutorials. Pin top turkey gear list.",
-      ppc: "Bid up: 'turkey hunting decoys,' 'turkey calls,' 'turkey vest,' 'spring fishing gear,' 'walleye lures 2026.' Geo-target by active state seasons.",
-      sms: "Gobble season is HERE 🦃 Turkey decoys, calls & loads — same-day ship → [link]",
+      email: "Subject: 'Storms aren't slowing down — restock before this weekend's round.' Feature generators, weather radios, and flashlights. Urgency-driven with the live SPC outlook.",
+      social: "Post the SPC severe-weather outlook map for the Iowa / northern Plains threat with a 3-item 'Do you have these tonight?' checklist. Reels: 60-second storm-kit builds.",
+      ppc: "Bid up: 'weather radio,' 'portable generator,' 'emergency flashlight,' 'storm prep kit.' Geo-target IA, NE, SD, MN, OK.",
+      sms: "FLASH: Severe storms across the Plains tonight. Generators & weather radios in stock, same-day ship → [link]. Don't wait for the siren.",
     },
   },
   {
@@ -106,58 +48,91 @@ const categories = [
     icon: "Shield",
     urgency: "HIGH",
     color: "#f97316",
-    heatScore: 85,
-    summary: "Prepper market shifting from panic-buying to practical planning. 68% of preppers upgraded medical/trauma kits. Supply chain disruptions in chemicals & medical supplies. Tornado outbreak driving acute regional demand. FEMA pushing 3-day minimum preparedness. Hygiene supplies emerging as underserved prepper niche.",
+    heatScore: 79,
+    summary: "Prepper demand is in seasonal ramp-up: National Hurricane Preparedness Week wrapped May 3–9, the Atlantic season opens June 1, and NOAA's official outlook drops May 21. Market data shows 68% of preppers upgraded kits with trauma supplies, and water security is the #1 priority. Wildfire risk is also elevated — 1.85M acres burned through April 30 (194% of the 10-year average) with above-normal fire potential across the southern tier.",
     sellingNow: [
-      "72-hour emergency kits / bug-out bags",
-      "Trauma & IFAK first aid kits",
-      "Water filtration (Sawyer, LifeStraw, Berkey)",
-      "Emergency food (Mountain House, ReadyWise, MREs)",
-      "Hand-crank / solar radios",
-      "Fire starters, emergency blankets, paracord",
+      "Water filtration (gravity & straw filters) & water storage",
+      "Freeze-dried / long-term food storage buckets",
+      "Trauma kits, IFAKs & advanced first aid",
+      "Hand-crank / solar radios & emergency comms",
+      "Pre-built 72-hour kits & get-home bags",
+      "Generators & backup power stations",
     ],
     sellingNext: [
-      "Solar generators & panels (summer storm season)",
-      "Long-term food storage (6-12 month kits)",
-      "Hygiene & sanitation kits (emerging trend)",
-      "Faraday bags & EMP protection gear",
-      "Ham radio / emergency comms gear",
+      "Hurricane-specific prep bundles (coastal-targeted)",
+      "N95 respirators & wildfire smoke protection",
+      "Tarps, window protection & sandbags",
+      "Solar panels & expandable power systems",
+      "Sanitation & waste-management kits",
     ],
-    whyNext: "Tornado season peaking April-June means 8+ weeks of storm-driven demand. Supply chain disruption headlines keep prepper community active. Summer hurricane season prep starts in May. FEMA preparedness month campaigns drive awareness.",
+    whyNext: "The May 21 NOAA hurricane outlook will spike coastal preparedness searches ahead of the June 1 season open, and the southern-tier wildfire build — Texas Hill Country to south Florida — adds a parallel demand stream for smoke and air protection through summer.",
     marketingAngles: {
-      email: "Subject: 'Are you REALLY ready for 72 hours on your own?' Interactive quiz funnel → personalized kit recommendations. Feature family-sized bundles. Trust signal: FEMA guidelines alignment.",
-      social: "Series: 'What's in my bug-out bag' — staff picks. Before/after organizing emergency supplies. Myth-busting: '5 prepper mistakes that could cost your life.'",
-      ppc: "Bid up: 'emergency kit,' 'bug out bag,' '72 hour kit,' 'MRE meals,' 'water filter survival,' 'storm prep supplies.' Geo-target tornado alley + hurricane coast.",
-      sms: "Severe weather season is HERE. Family emergency kits from $49.99 — don't get caught unprepared → [link]",
+      email: "Subject: 'Hurricane season opens June 1 — NOAA's forecast lands May 21.' Interactive kit-builder funnel. Feature family-sized bundles aligned with FEMA guidelines.",
+      social: "Countdown graphic: '17 days to hurricane season — the 5-item kit most people forget.' Series: 'What's in my get-home bag.'",
+      ppc: "Bid up: 'hurricane prep kit,' 'emergency water filter,' 'long term food storage,' 'bug out bag.' Boost Gulf & Atlantic coast geos.",
+      sms: "Hurricane season starts June 1. Water, food & power kits ready to ship — beat the pre-storm sellout → [link].",
     },
   },
   {
     id: "tactical",
     name: "Tactical & EDC",
     icon: "Target",
-    urgency: "MEDIUM",
-    color: "#eab308",
-    heatScore: 74,
-    summary: "EDC trending toward minimalist, lightweight, office-friendly designs. Sustainability focus — Micarta handles, recycled metals gaining share. Smart tech integration (GPS, Bluetooth). Multi-tool market evolving toward 'fewer tools, better execution.' New pocket knife & multi-tool releases dropping weekly. Tariffs hitting imported soft goods hard (26-46% increases on Vietnam, Bangladesh, China, India).",
+    urgency: "HIGH",
+    color: "#f97316",
+    heatScore: 71,
+    summary: "The 2026 EDC market is defined by 'Minimalist Preparedness' — tools that do more and weigh less — with flat-profile pocket lights, compact fixed blades, and transforming multi-tools leading new releases. Father's Day (June 21) is now in the gifting window, and EDC is a top men's gift category. Tariffs are a real headwind: apparel/footwear/leather carry roughly 8% added cost under Section 122, with China imports near 35%, and a May 7 court ruling left pricing volatile.",
     sellingNow: [
-      "Lightweight multi-tools (Leatherman, Gerber)",
-      "Minimalist pocket knives (titanium, Micarta handles)",
-      "Tactical flashlights (compact, rechargeable)",
-      "Everyday carry organizers & pouches",
-      "Tactical pens & discreet self-defense tools",
+      "Pocket knives & compact fixed blades",
+      "Lightweight multi-tools",
+      "Flat-profile EDC flashlights & headlamps",
+      "EDC pouches, organizers & pocket slips",
+      "Tactical pens & titanium small gear",
+      "Belts, wallets & key organizers",
     ],
     sellingNext: [
-      "Father's Day EDC gift sets (6 weeks out)",
-      "Summer EDC (lighter, moisture-wicking holsters)",
-      "Tariff-driven price increases on imported knives/tools",
-      "Back-to-school EDC kits (early planning)",
+      "Father's Day gift bundles & sets",
+      "Engravable / personalized knives & tools",
+      "Premium gift-tier knives & titanium gear",
+      "EDC watches & tactical accessories",
+      "Gift cards & 'build-a-kit' gifting options",
     ],
-    whyNext: "Father's Day (June 15) is the next major gifting event — EDC is a top gift category. Import tariffs will push prices up on overseas-made gear, creating urgency to buy now. Summer carry adjustments drive lighter/slimmer gear.",
+    whyNext: "Father's Day on June 21 opens the gift-buying window now — early shoppers beat both shipping cutoffs and further tariff-driven price increases on imported gear. Personalized and engravable items have lead times, pulling those purchases forward.",
     marketingAngles: {
-      email: "Subject: 'The 2026 EDC starter kit — what belongs in your pockets?' Curated bundles by persona (office worker, outdoorsman, first responder). Early Father's Day gift guide tease.",
-      social: "Flat-lay photos of curated EDC loadouts. 'What's in your pockets?' community engagement. Unboxing reels of new knife releases.",
-      ppc: "Bid up: 'EDC gear,' 'everyday carry kit,' 'best pocket knife 2026,' 'tactical flashlight,' 'Father's Day gift for men.' Start Father's Day campaigns early.",
-      sms: "New EDC drops just landed — titanium knives, rechargeable lights & more → [link]. Prices going up with tariffs, grab yours now.",
+      email: "Subject: 'Father's Day starts now — give him gear he'll carry every day.' Curated bundles by persona. Push 'order early, beat tariff price bumps.'",
+      social: "'The gift that doesn't gather dust' — carousel of knife / multi-tool / flashlight gift picks. Unboxing reels of new EDC releases.",
+      ppc: "Bid up: 'Father's Day gifts for men,' 'best EDC knife,' 'multi-tool gift,' 'tactical flashlight.' Launch Father's Day campaigns now.",
+      sms: "Dad's day is June 21. Knives, multi-tools & lights he'll actually use — shop early before tariff price hikes → [link].",
+    },
+  },
+  {
+    id: "hunting",
+    name: "Hunting — Turkey / Fishing",
+    icon: "TreePine",
+    urgency: "HIGH",
+    color: "#f97316",
+    heatScore: 64,
+    summary: "Spring turkey season is in its final stretch — northeastern states stay open (NY through 5/31, PA through 5/30, Maine through 6/6) while Virginia closes 5/16, a hard late-season deadline this week. Missouri's nation-leading 51,010-bird spring 2025 harvest keeps turkey gear demand strong. Fishing has shifted to post-spawn patterns: walleye holding on rocky transitions near 12 ft, largemouth staging in warm bays, and channel catfish heating up across the Mississippi system.",
+    sellingNow: [
+      "Turkey calls — box, slate, diaphragm & locator",
+      "Turkey decoys (jake/hen combos) & ground blinds",
+      "Turkey vests, lightweight camo & TSS loads",
+      "Walleye jigs, crankbaits & live-bait rigs",
+      "Bass soft plastics, spinnerbaits & topwater",
+      "Catfish gear — circle hooks, cut-bait rigs, heavy line",
+    ],
+    sellingNext: [
+      "Summer-pattern bass gear (deep crankbaits, Carolina rigs)",
+      "Catfish setups — rod holders, bank gear, jug lines",
+      "Polarized sunglasses & UPF sun apparel",
+      "Kayak / boat fishing accessories & tackle storage",
+      "Panfish & crappie tackle",
+    ],
+    whyNext: "Most spring turkey seasons close within two weeks, so demand pivots fully to fishing as water temps push bass into the spawn and catfish into peak summer feeding. Rising temperatures also drive UV-protection apparel, a noted spring-summer 2026 retail trend.",
+    marketingAngles: {
+      email: "Subject: 'Last call for longbeards.' Late-season turkey gear checklist for NE / Mid-Atlantic hunters, cross-promoted with post-spawn bass and catfish tackle.",
+      social: "Split-content post: 'NE hunters still have weeks left' vs. 'everyone else — the cats are biting.' UGC 'Show us your gobbler' contest.",
+      ppc: "Bid up: 'late season turkey calls,' 'turkey hunting decoys,' 'post spawn walleye lures,' 'catfish rigs.' Geo-target by active state seasons.",
+      sms: "Turkey season's closing in most states. Grab calls & decoys now — or gear up for catfish season → [link].",
     },
   },
   {
@@ -166,27 +141,29 @@ const categories = [
     icon: "Package",
     urgency: "MEDIUM",
     color: "#eab308",
-    heatScore: 70,
-    summary: "Tactical boots & pants remain top sellers. Military backpacks/load-bearing gear popular with outdoor and prepper communities. Online retail dominates (~70% of surplus market). Sustainability narrative growing — surplus as eco-friendly alternative to fast fashion. Gorpcore/milsurp fashion trend maintaining momentum with younger demographics.",
+    heatScore: 62,
+    summary: "Gorpcore — functional outdoor gear worn as everyday style — is a $4.9B market growing ~7.2% annually, maturing in 2026 into muted, durable 'Quiet Outdoors.' Military surplus is the value play within the trend, delivering the look at a fraction of hype-brand prices. Tariffs (8% added on apparel/footwear under Section 122, ~35% on Chinese goods, apparel prices up ~33%) are actively steering buyers toward domestic surplus inventory as camping season opens.",
     sellingNow: [
-      "Tactical boots (Belleville, Danner, McRae)",
-      "BDU / ACU pants & surplus cargo pants",
-      "Military-spec backpacks & rucksacks (ALICE, MOLLE)",
-      "Surplus sleeping systems & ponchos",
-      "Canteens, mess kits, field gear",
+      "Tactical / combat boots & surplus footwear",
+      "Surplus field jackets, BDU/OCP apparel & fatigues",
+      "Rucksacks, ALICE & MOLLE packs",
+      "Wool blankets, ponchos & shelter halves",
+      "Canteens, mess kits & field pouches",
+      "Camo apparel & tactical pants",
     ],
     sellingNext: [
-      "Lightweight summer-weight BDUs",
-      "Boonie hats & sun protection gear",
-      "Hydration packs (summer heat)",
-      "Surplus tents & shelters (camping season)",
+      "Camping-season surplus — sleep systems, cots, tarps",
+      "Bug nets, ground pads & warm-weather field gear",
+      "Surplus duffels & travel packs",
+      "Boonie hats & sun-protective headwear",
+      "Lightweight warm-weather uniforms & layers",
     ],
-    whyNext: "Spring-to-summer transition drives lightweight clothing demand. Camping season kickoff means shelter, sleep systems, and field gear. Fashion/gorpcore trend keeps younger buyers shopping surplus. Import tariffs make new tactical apparel more expensive, pushing value-seekers to surplus.",
+    whyNext: "Camping-season demand accelerates through late May into Memorial Day weekend, and surplus sleep systems and shelter gear are high-value, durable picks. Continued tariff-driven inflation on new imported gear keeps steering budget-conscious buyers to surplus.",
     marketingAngles: {
-      email: "Subject: 'Military-grade gear at surplus prices — why pay retail?' Compare surplus vs retail pricing. Highlight durability + sustainability angle. Feature seasonal picks for spring camping.",
-      social: "'Surplus style' outfit-of-the-day posts targeting gorpcore audience. TikTok: 'I bought my entire camping kit from military surplus for under $100.' Heritage storytelling content.",
-      ppc: "Bid up: 'military surplus boots,' 'army backpack,' 'BDU pants,' 'military camping gear,' 'tactical pants cheap.' Target outdoor + fashion audiences.",
-      sms: "Genuine military surplus — boots, packs & field gear at fraction of retail → [link]. Built to last, priced to move.",
+      email: "Subject: 'The gorpcore look for ¼ the price.' Compare surplus vs. retail pricing. Feature spring-camping picks — boots, jackets, packs.",
+      social: "'Tariffs made new gear expensive. Surplus didn't get the memo.' Before/after price comparison. 'Surplus style' outfit-of-the-day for the gorpcore audience.",
+      ppc: "Bid up: 'military surplus boots,' 'ALICE pack,' 'surplus field jacket,' 'cheap camping gear.' Target outdoor + fashion audiences.",
+      sms: "New gear prices are up 33%. Surplus boots & packs still priced right → [link]. Built to last, priced to move.",
     },
   },
 ];
@@ -195,48 +172,46 @@ const categories = [
 const heatData = categories.map((c) => ({ name: c.name.split(" —")[0].split(" /")[0], score: c.heatScore, fill: c.color }));
 
 const channelPriorityData = [
-  { channel: "Email", weather: 90, ammo: 95, turkey: 85, emergency: 88, edc: 70, surplus: 65 },
-  { channel: "Social", weather: 80, ammo: 75, turkey: 95, emergency: 70, edc: 90, surplus: 85 },
-  { channel: "PPC", weather: 95, ammo: 90, turkey: 80, emergency: 92, edc: 75, surplus: 60 },
-  { channel: "SMS", weather: 98, ammo: 85, turkey: 70, emergency: 95, edc: 60, surplus: 50 },
+  { channel: "Email", weather: 90, turkey: 80, emergency: 92, edc: 85, surplus: 65 },
+  { channel: "Social", weather: 82, turkey: 88, emergency: 72, edc: 90, surplus: 88 },
+  { channel: "PPC", weather: 95, turkey: 78, emergency: 90, edc: 88, surplus: 62 },
+  { channel: "SMS", weather: 98, turkey: 68, emergency: 95, edc: 70, surplus: 55 },
 ];
 
 const weeklyCalendar = [
-  { day: "Mon 4/14", action: "LAUNCH storm-prep email blast to full list. Push SMS to geo-targeted tornado alley. Update PPC bids on emergency keywords. Post storm damage + 'Be Ready' social." },
-  { day: "Tue 4/15", action: "Send ammo price-increase email with comparison tables. Launch bulk ammo PPC campaigns. Post turkey season 'gear check' carousel on Instagram." },
-  { day: "Wed 4/16", action: "Turkey hunting UGC campaign kickoff — 'Show Us Your Gobbler.' Mid-week SMS: ammo deal reminder. Blog post: '2026 Ammo Price Guide — What You Need to Know.'" },
-  { day: "Thu 4/17", action: "Emergency prep email: '72-Hour Kit Checklist.' EDC new-arrivals social post. Launch Father's Day early-bird PPC tests." },
-  { day: "Fri 4/18", action: "Weekend warrior email: Turkey + fishing gear roundup. Military surplus 'camping for under $100' TikTok/Reel. Flash sale SMS: free shipping on orders $75+." },
-  { day: "Sat 4/19", action: "Social engagement day: respond to UGC, share customer photos. Retarget email openers from Monday/Tuesday with follow-up offers." },
-  { day: "Sun 4/20", action: "Prep next week's content. Analyze campaign performance. Restock alerts on fast-movers. Plan Monday's email based on weekend storm/news developments." },
+  { day: "Mon 5/11", action: "LAUNCH storm-prep email blast — generators, weather radios, flashlights — geo-targeted to the Plains & Midwest. Update PPC bids on emergency keywords." },
+  { day: "Tue 5/12", action: "Open the Father's Day campaign: launch landing page and PPC for 'Father's Day gifts for men' and EDC knives. Post turkey 'gear check' carousel on Instagram." },
+  { day: "Wed 5/13", action: "Post the SPC severe-weather outlook to social with a 3-item 'tonight's checklist.' Boost in IA, NE, SD. Blog post: '2026 Storm Prep Guide.'" },
+  { day: "Thu 5/14", action: "'Last call for longbeards' late-season turkey email to NE / Mid-Atlantic; cross-promote post-spawn fishing gear. EDC new-arrivals social post." },
+  { day: "Fri 5/15", action: "SMS storm alert — enhanced risk over Iowa. Push in-stock generators & weather radios with same-day shipping. Flash free-shipping offer on orders $75+." },
+  { day: "Sat 5/16", action: "Weekend surplus + camping flash promo — 'gorpcore for ¼ the price.' Feature boots, packs, sleep systems. Respond to UGC and share customer photos." },
+  { day: "Sun 5/17", action: "Tease hurricane prep — 'NOAA's 2026 outlook drops Thursday' — water/food/power bundles, coastal geos. Plan next week's content from weekend developments." },
 ];
 
 const topKeywords = [
-  { keyword: "emergency weather radio", volume: "High", cpc: "$1.80", competition: "Med", priority: "🔴" },
-  { keyword: "bulk 9mm ammo", volume: "Very High", cpc: "$2.40", competition: "High", priority: "🔴" },
-  { keyword: "turkey hunting decoys", volume: "High", cpc: "$1.20", competition: "Med", priority: "🟠" },
-  { keyword: "72 hour emergency kit", volume: "High", cpc: "$2.10", competition: "Med", priority: "🔴" },
-  { keyword: "portable power station", volume: "Very High", cpc: "$3.50", competition: "High", priority: "🟠" },
-  { keyword: "cheap 5.56 ammo", volume: "High", cpc: "$1.90", competition: "Med", priority: "🔴" },
-  { keyword: "bug out bag", volume: "High", cpc: "$1.60", competition: "Med", priority: "🟠" },
-  { keyword: "EDC knife 2026", volume: "Med", cpc: "$0.90", competition: "Low", priority: "🟡" },
-  { keyword: "turkey calls", volume: "High", cpc: "$0.80", competition: "Low", priority: "🟠" },
-  { keyword: "military surplus boots", volume: "Med", cpc: "$1.10", competition: "Low", priority: "🟡" },
-  { keyword: "storm prep kit", volume: "High", cpc: "$1.70", competition: "Med", priority: "🔴" },
-  { keyword: "reloading kit", volume: "Med", cpc: "$1.40", competition: "Low", priority: "🟠" },
+  { keyword: "weather radio", volume: "Very High", cpc: "$1.20", competition: "High", priority: "🔴" },
+  { keyword: "portable generator", volume: "Very High", cpc: "$2.10", competition: "High", priority: "🔴" },
+  { keyword: "hurricane prep kit", volume: "High", cpc: "$1.65", competition: "Med", priority: "🔴" },
+  { keyword: "Father's Day gifts for men", volume: "Very High", cpc: "$1.05", competition: "High", priority: "🟠" },
+  { keyword: "emergency water filter", volume: "High", cpc: "$1.40", competition: "Med", priority: "🟠" },
+  { keyword: "best EDC knife", volume: "High", cpc: "$0.95", competition: "Med", priority: "🟠" },
+  { keyword: "military surplus boots", volume: "Med", cpc: "$0.75", competition: "Low", priority: "🟡" },
+  { keyword: "long term food storage", volume: "High", cpc: "$1.85", competition: "High", priority: "🟠" },
+  { keyword: "turkey hunting calls", volume: "Med", cpc: "$0.70", competition: "Low", priority: "🟡" },
+  { keyword: "multi-tool", volume: "High", cpc: "$0.90", competition: "Med", priority: "🟡" },
 ];
 
 const tariffImpact = [
-  { item: "TSS Turkey Loads (China)", tariff: "32%+", priceImpact: "Doubled — $20+/shell", action: "Push domestic lead alternatives" },
-  { item: "PMC Ammo (South Korea)", tariff: "25%", priceImpact: "+$100/1000 rds (5.56)", action: "Stock up, highlight domestic brands" },
-  { item: "Prvi Partizan (Serbia)", tariff: "37%", priceImpact: "May exit US market", action: "Clear inventory, alert loyal buyers" },
-  { item: "Imported Soft Goods (Vietnam)", tariff: "46%", priceImpact: "+26-46% on apparel", action: "Surplus gear as value alternative" },
-  { item: "Raw Metals (Copper, Lead)", tariff: "25%", priceImpact: "Ammo +8-15% from 2024", action: "Promote reloading, bulk buys" },
+  { item: "Imported Apparel / Field Clothing (China)", tariff: "~35%", priceImpact: "Retail up ~30-33%", action: "Push domestic surplus apparel as the value alternative" },
+  { item: "Tactical Boots / Footwear (Vietnam)", tariff: "~18%", priceImpact: "Footwear up ~33% sector-wide", action: "Pre-buy inventory; promote surplus boots heavily" },
+  { item: "EDC Knives & Multi-Tools (China)", tariff: "~35%", priceImpact: "Added cost on metal goods", action: "Order Father's Day stock early; 'buy before price hikes'" },
+  { item: "Synthetic Gear & Raw Materials (Asia)", tariff: "10-18%", priceImpact: "Input costs up 10-20%", action: "Lock supplier pricing; favor USA-made or surplus" },
+  { item: "TSS Turkey Loads (imported components)", tariff: "~10-35%", priceImpact: "Modest per-box increase", action: "Stock for late NE season; bundle with calls & decoys" },
 ];
 
 // ─── COMPONENTS ────────────────────────────────────────────────────────────────
 
-const COLORS = ["#ef4444", "#f97316", "#f97316", "#f97316", "#eab308", "#eab308"];
+const COLORS = ["#ef4444", "#f97316", "#f97316", "#f97316", "#eab308"];
 
 const TabButton = ({ active, onClick, children, color }) => (
   <button
@@ -382,8 +357,8 @@ export default function ArmyNavyTrendDashboard() {
       <div className="bg-red-950 border border-red-800 rounded-lg p-3 mb-6 flex items-start gap-3">
         <AlertTriangle size={20} className="text-red-400 mt-0.5 flex-shrink-0" />
         <div>
-          <p className="text-sm font-bold text-red-300">CRITICAL ALERT — Active Tornado Outbreak</p>
-          <p className="text-xs text-red-400 mt-1">14+ tornadoes confirmed across KS, MO, IA, MN, WI on April 13. Storms forecast through April 16. 12,000+ without power in Kansas. Ammo price hikes effective April 1 across all major brands (2-10%). TSS turkey loads doubled due to China tariffs.</p>
+          <p className="text-sm font-bold text-red-300">CRITICAL ALERT — Active Severe Weather Siege</p>
+          <p className="text-xs text-red-400 mt-1">Enhanced risk of severe storms over Iowa May 15, with another strong-to-severe round forecast for the northern Plains Saturday night. 2026 is a record-violent tornado year — 109+ tornadoes in Illinois alone by May 11. NOAA releases its official 2026 Atlantic hurricane outlook May 21; season opens June 1.</p>
         </div>
       </div>
 
@@ -450,15 +425,15 @@ export default function ArmyNavyTrendDashboard() {
             <div className="space-y-3">
               <div className="bg-red-950/50 border border-red-800/50 rounded-lg p-3">
                 <p className="text-sm font-semibold text-red-300">1. Storm-Prep Blitz (TODAY)</p>
-                <p className="text-xs text-gray-300 mt-1">Send emergency-prep email + SMS to full list. Geo-target PPC to tornado-affected states. Post storm content on social. This is time-sensitive — storms continue through Friday.</p>
+                <p className="text-xs text-gray-300 mt-1">Send storm-prep email + SMS to the full list. Geo-target PPC to the Plains & Midwest. Enhanced severe-weather risk over Iowa today with another round Saturday night — this is time-sensitive.</p>
               </div>
               <div className="bg-orange-950/50 border border-orange-800/50 rounded-lg p-3">
-                <p className="text-sm font-semibold text-orange-300">2. Ammo Price-Hike Campaign (Tue-Wed)</p>
-                <p className="text-xs text-gray-300 mt-1">Educate customers on April 1 price increases. Push bulk deals with 'lock in today's price' urgency. Feature comparison tables and reloading alternatives.</p>
+                <p className="text-sm font-semibold text-orange-300">2. Hurricane Prep Pre-Season Push (This Week)</p>
+                <p className="text-xs text-gray-300 mt-1">NOAA's official 2026 hurricane outlook releases May 21 and the season opens June 1. Get water, food, and power kit bundles in front of coastal customers before the rush.</p>
               </div>
               <div className="bg-orange-950/50 border border-orange-800/50 rounded-lg p-3">
-                <p className="text-sm font-semibold text-orange-300">3. Turkey Season Push (All Week)</p>
-                <p className="text-xs text-gray-300 mt-1">Season is active in most states with expanded bag limits. Push decoy combos, budget shotshells (Long Beard XR), calls, and vests. Launch UGC photo contest.</p>
+                <p className="text-sm font-semibold text-orange-300">3. Father's Day EDC Launch (Tue onward)</p>
+                <p className="text-xs text-gray-300 mt-1">Father's Day is June 21. Launch gift bundles, a landing page, and PPC now — early orders beat shipping cutoffs and further tariff-driven price hikes on imported gear.</p>
               </div>
             </div>
           </div>
@@ -484,10 +459,10 @@ export default function ArmyNavyTrendDashboard() {
         <div className="space-y-3">
           <h2 className="text-lg font-bold flex items-center gap-2"><ShoppingCart size={18} /> Weekly Marketing Action Plan</h2>
           {weeklyCalendar.map((day, i) => (
-            <div key={i} className={`rounded-lg p-3 ${i === 0 ? "bg-red-950/50 border border-red-800" : "bg-gray-900"}`}>
+            <div key={i} className={`rounded-lg p-3 ${i === TODAY_INDEX ? "bg-red-950/50 border border-red-800" : "bg-gray-900"}`}>
               <div className="flex items-center gap-2 mb-1">
-                <span className={`text-sm font-bold ${i === 0 ? "text-red-300" : "text-green-400"}`}>{day.day}</span>
-                {i === 0 && <span className="text-xs bg-red-800 text-red-200 px-1.5 py-0.5 rounded">TODAY</span>}
+                <span className={`text-sm font-bold ${i === TODAY_INDEX ? "text-red-300" : "text-green-400"}`}>{day.day}</span>
+                {i === TODAY_INDEX && <span className="text-xs bg-red-800 text-red-200 px-1.5 py-0.5 rounded">TODAY</span>}
               </div>
               <p className="text-sm text-gray-300">{day.action}</p>
             </div>
@@ -528,10 +503,10 @@ export default function ArmyNavyTrendDashboard() {
           <div className="bg-gray-900 rounded-xl p-4">
             <h3 className="text-sm font-bold text-gray-300 mb-2">Geo-Targeting Recommendations</h3>
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Storm Prep:</strong> <span className="text-gray-300">KS, MO, IA, MN, WI, IL, OK, TX, NE</span></div>
-              <div className="bg-orange-950/30 rounded p-2"><strong className="text-orange-400">Ammo:</strong> <span className="text-gray-300">Nationwide — emphasize TX, FL, GA, OH, PA, NC</span></div>
-              <div className="bg-orange-950/30 rounded p-2"><strong className="text-orange-400">Turkey:</strong> <span className="text-gray-300">IN, AR, MS, KY, OH, PA, VA, TX (active seasons)</span></div>
-              <div className="bg-yellow-950/30 rounded p-2"><strong className="text-yellow-400">EDC/Surplus:</strong> <span className="text-gray-300">Nationwide — metro areas for EDC, rural for surplus</span></div>
+              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Storm Prep:</strong> <span className="text-gray-300">IA, NE, SD, MN, WI, IL, KS, MO, OK</span></div>
+              <div className="bg-orange-950/30 rounded p-2"><strong className="text-orange-400">Hurricane / Emergency:</strong> <span className="text-gray-300">Gulf & Atlantic coast — TX, LA, FL, GA, SC, NC</span></div>
+              <div className="bg-orange-950/30 rounded p-2"><strong className="text-orange-400">Turkey / Fishing:</strong> <span className="text-gray-300">NY, PA, ME, WV (late seasons) + nationwide fishing</span></div>
+              <div className="bg-yellow-950/30 rounded p-2"><strong className="text-yellow-400">EDC / Surplus:</strong> <span className="text-gray-300">Nationwide — metro areas for EDC, rural for surplus</span></div>
             </div>
           </div>
         </div>
@@ -541,7 +516,7 @@ export default function ArmyNavyTrendDashboard() {
       {activeTab === "tariffs" && (
         <div className="space-y-4">
           <h2 className="text-lg font-bold flex items-center gap-2"><AlertTriangle size={18} className="text-yellow-400" /> Tariff Impact Watch</h2>
-          <p className="text-sm text-gray-400">April 2 tariffs are reshaping pricing across your inventory. Here's what to act on now.</p>
+          <p className="text-sm text-gray-400">Section 122 tariffs are reshaping pricing across your inventory — and a May 7 court ruling left rates volatile. Here's what to act on now.</p>
           <div className="bg-gray-900 rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -568,14 +543,14 @@ export default function ArmyNavyTrendDashboard() {
           </div>
           <div className="bg-yellow-950/30 border border-yellow-800/50 rounded-lg p-4">
             <h3 className="text-sm font-bold text-yellow-300 mb-2">Strategic Takeaway</h3>
-            <p className="text-sm text-gray-300">Tariffs are creating a two-speed market: domestic brands gaining pricing power while imports face existential pressure. Use this to your advantage — position Army Navy Outdoors as the place to find value through military surplus alternatives, domestic ammo brands, and bulk-buy savings before the next wave of increases. Lead-based turkey loads are the smart-money play while TSS is priced out of reach.</p>
+            <p className="text-sm text-gray-300">Tariffs are creating a two-speed market: domestic and surplus gear gaining pricing power while imports face ~33% price inflation. Use this to your advantage — position Army Navy Outdoors as the value destination through military surplus alternatives and 'buy now before the next increase' urgency. With the Section 122 proclamation under appeal after the May 7 court ruling, pricing could shift again — keep customers informed and inventory locked.</p>
           </div>
         </div>
       )}
 
       {/* Footer */}
       <div className="mt-8 pt-4 border-t border-gray-800 text-center">
-        <p className="text-xs text-gray-600">Army Navy Outdoors — Weekly Trend Intelligence | Generated {SCAN_DATE} | Sources: NOAA, SPC, NWTF, NSSF, Target Sports USA, Field & Stream, AccuWeather, CNN Weather, Grand View Research</p>
+        <p className="text-xs text-gray-600">Army Navy Outdoors — Weekly Trend Intelligence | Generated {SCAN_DATE} | Sources: NOAA, SPC, NIFC, FEMA, Ready.gov, OutdoorHub, Game & Fish, Gear Patrol, Tax Foundation, ISPO, Grand View Research</p>
       </div>
     </div>
   );
