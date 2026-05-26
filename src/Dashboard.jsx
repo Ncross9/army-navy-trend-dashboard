@@ -2,11 +2,11 @@ import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from "recharts";
 import { AlertTriangle, TrendingUp, Zap, Target, Shield, CloudLightning, ShoppingCart, Mail, MessageSquare, DollarSign, TreePine, Package, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 
-// ─── DATA: BAKED IN FROM MAY 15 2026 RESEARCH ─────────────────────────────────
+// ─── DATA: BAKED IN FROM MAY 26 2026 RESEARCH ─────────────────────────────────
 
-const SCAN_DATE = "May 15, 2026";
-const SCAN_WEEK = "Week of May 18–24, 2026";
-const KEY_DAY_INDEX = 3; // Thu 5/21 — NOAA hurricane outlook, the week's pivotal action day
+const SCAN_DATE = "May 26, 2026";
+const SCAN_WEEK = "Week of May 25–31, 2026";
+const TODAY_INDEX = 1; // Tue 5/26 — scan day, index into weeklyCalendar
 
 const urgencyLevels = { CRITICAL: "🔴", HIGH: "🟠", MEDIUM: "🟡", WATCH: "🟢" };
 
@@ -17,60 +17,58 @@ const categories = [
     icon: "Shield",
     urgency: "CRITICAL",
     color: "#ef4444",
-    heatScore: 92,
-    summary: "This is the highest-leverage week of the quarter for emergency-prep merchandising. NOAA's official 2026 Atlantic hurricane outlook releases Thursday May 21 — nine days before the June 1 season open. Pre-season forecasts (CSU 13 storms / 6 hurricanes; AccuWeather 11–16 named storms) signal a 'somewhat below-normal' El Niño season, but below-normal still means 11–16 named storms. Southwest wildfire risk is elevated with snowpack under 20% of normal, and Plains flooding adds an active-week prep driver.",
+    heatScore: 94,
+    summary: "This is the peak preparedness window of the year — the Atlantic hurricane season opens Monday June 1, six days out. NOAA's May 21 below-normal outlook (8–14 named storms, 3–6 hurricanes) was paired with unusually firm warnings — 'it only takes one; Category 5s have hit during below-average seasons' — and agencies are urging the public to stock food, water, medicine, batteries and supplies NOW. Layered on top: 61%+ of the U.S. is in drought, AccuWeather projects 5.5–8 million acres burning, and wildfire smoke is forecast to reach the Midwest, Great Lakes and Northeast.",
     sellingNow: [
-      "Emergency kits / bug-out bags (7-day food + water)",
-      "Water storage containers, purification tablets & gravity filters",
-      "NOAA weather radios, flashlights & lanterns",
-      "Portable power stations, solar chargers & CO detectors",
-      "Long-shelf-life / freeze-dried food buckets",
-      "N95 respirators & air filtration for wildfire smoke",
+      "Water storage, filtration & purification tablets",
+      "Long-shelf-life food — buckets, MREs, freeze-dried",
+      "Portable power stations, battery banks & solar chargers",
+      "NOAA weather radios, batteries & lanterns",
+      "First-aid / trauma kits & medicine organizers",
+      "N95 / respirator masks & air filtration (wildfire smoke)",
     ],
     sellingNext: [
-      "Generator accessories, fuel cans & transfer-fill supplies",
-      "Hurricane hardware — window film, tie-downs, tarps",
-      "First-aid & trauma kits",
-      "Pet emergency kits & waterproof document safes",
-      "Vehicle emergency kits for evacuation readiness",
+      "Generators, fuel cans & transfer setups",
+      "Whole-home / large-format water reserves",
+      "Evacuation go-bags & document/cash kits",
+      "Sandbags & flood barriers for Gulf/coastal customers",
     ],
-    whyNext: "The May 21 NOAA announcement is a guaranteed national news event that will drive a search-and-purchase spike for hurricane prep through May 21–31, leading into the June 1 season open. Inventory and content staged before May 21 captures the reaction wave; competitors who wait will be late.",
+    whyNext: "The June 1 open is a hard demand trigger; even in a below-normal year, prep purchasing front-loads into late May and early June. Drought and early-season fire activity add a parallel smoke / air-quality demand stream across the eastern U.S. that extends well beyond the coast.",
     marketingAngles: {
-      email: "Subject: 'The 2026 Hurricane Forecast Is In.' Pre-stage for May 21 — lead with the headline storm numbers and a tiered kit bundle (Starter / Family / 7-Day).",
-      social: "May 21–22 myth-buster post: 'Below-Normal Season ≠ No Risk — it only takes one storm.' Pair with a 7-day prep checklist graphic.",
-      ppc: "Surge spend May 21–31 on 'emergency kit,' 'hurricane supplies,' 'freeze dried food,' 'portable generator.' Boost Gulf & Atlantic coast geos.",
-      sms: "Hurricane season starts June 1. NOAA's 2026 forecast just dropped — stock your kit before the rush → [link].",
+      email: "Subject: 'Hurricane Season Starts Monday — build the kit FEMA & NOAA say to have today.' Lead with a 72-hour checklist tied to the June 1 open.",
+      social: "'Below-normal forecast ≠ no risk — here's why' explainer with a 72-hour kit checklist graphic.",
+      ppc: "Aggressive bids on 'hurricane kit,' 'emergency water storage,' 'wildfire smoke mask,' 'weather radio.' Boost Gulf & Atlantic coast geos.",
+      sms: "Hurricane season opens 6/1. Don't wait for a cone on the map — food, water & power kits ready now → [link].",
     },
   },
   {
     id: "weather",
     name: "Weather / Storm Events",
     icon: "CloudLightning",
-    urgency: "CRITICAL",
-    color: "#ef4444",
+    urgency: "HIGH",
+    color: "#f97316",
     heatScore: 88,
-    summary: "A multi-day severe weather setup hits the central U.S. this week: a western trough ejects across the Plains with a possible severe outbreak Monday May 18 (Nebraska into central Kansas — tornadoes, large hail, damaging wind), then the front spreads scattered severe storms from Texas through the MS/OH Valleys into the Mid-Atlantic Tuesday–Thursday. Simultaneously a record-challenging heatwave grips the East and South — 22 states with record-heat potential, temps 15–25°F above average. NOAA's official 2026 Atlantic hurricane outlook drops Thursday May 21.",
+    summary: "The week is bracketed by a wet, stormy post-Memorial-Day stretch and the June 1 hurricane season open the day after it ends. AccuWeather/SPC flag 1–4\" of rain (locally 6–8\") from southeast Texas and central Louisiana up through New York, with flash-flood and damaging-wind risk through late week, while the northern Plains and Upper Midwest run 20–30°F above normal. NOAA's May 21 outlook predicts a below-normal season driven by a developing El Niño (82% chance May–July); NHC sees no tropical formation in the next 7 days but is watching western Gulf convection and two tropical waves.",
     sellingNow: [
-      "NOAA weather radios & emergency AM/FM radios",
-      "Tarps, sandbags & flood-barrier supplies",
-      "Battery-powered fans, cooling towels & hydration products",
-      "Headlamps, flashlights & rechargeable lanterns",
-      "Weatherproof totes & gear bags to stage supplies",
-      "Portable power stations & power banks",
+      "Rain gear, ponchos & waterproof shells (TX–Northeast flood threat)",
+      "Tarps, sandbags & water-diversion gear (flash-flood zones)",
+      "Portable fans, hydration packs & cooling gear (Midwest heat)",
+      "NOAA weather radios & battery banks",
+      "Waterproof dry bags & gear cases",
+      "Headlamps & flashlights for outage readiness",
     ],
     sellingNext: [
-      "Full hurricane-prep kits (post-May 21 demand surge)",
-      "Generator accessories, fuel cans & CO detectors",
-      "Shade canopies & cooling gear",
-      "First-aid & trauma kits",
-      "Water storage containers & purification tablets",
+      "Full hurricane-prep kits (June 1 open)",
+      "Generators & fuel storage cans",
+      "Storm shutters / window film, rope & lashing",
+      "Sandbag bulk packs for coastal / Gulf customers",
     ],
-    whyNext: "The May 21 NOAA outlook will dominate national news and push hurricane prep from a niche coastal concern to mainstream search-and-buy behavior within days. The early record-breaking heat is pulling the summer cooling and hydration demand curve forward by 3–4 weeks.",
+    whyNext: "The June 1 season open creates an automatic demand trigger regardless of the below-normal forecast — this year's official messaging explicitly warns consumers not to relax. Early-season Gulf development is the historical norm, and any named system in June would spike demand instantly.",
     marketingAngles: {
-      email: "Subject: 'Two extremes, one week — are you ready for either?' Feature storm radios and lighting alongside cooling and hydration gear. Fire a May 21 NOAA-reaction follow-up.",
-      social: "Split-screen reel: Plains tornado risk Monday vs. East Coast record heat. Caption: 'Two extremes, one week — are you ready?'",
-      ppc: "Bid up: 'noaa weather radio,' 'portable power station,' 'hurricane prep kit,' 'cooling fan.' Front-load budget to May 21–24.",
-      sms: "FLASH: Severe storms in the Plains + record heat out East. Storm & cooling gear in stock, same-day ship → [link].",
+      email: "Subject: '6 days to hurricane season — beat the rush, build your kit now.' Checklist tied to the June 1 open, plus active-flooding rain gear.",
+      social: "Post the NOAA '8–14 storms but it only takes one' graphic with a stitched reel of a 10-minute kit build.",
+      ppc: "Bid up: 'hurricane prep checklist,' 'weather radio,' 'rain gear,' 'tarps.' Front-load ahead of the June 1 demand curve.",
+      sms: "Storm season opens Mon 6/1. Flash flooding hitting TX–NY now — rain gear & radios in stock → [link].",
     },
   },
   {
@@ -79,59 +77,28 @@ const categories = [
     icon: "Target",
     urgency: "HIGH",
     color: "#f97316",
-    heatScore: 74,
-    summary: "Memorial Day weekend (May 23–25) anchors the week — 54% of consumers plan a holiday-weekend purchase (up from 36% in 2025), though average planned spend has dropped sharply to ~$86, signaling deal-hunting, lower-ticket buying. The Father's Day ramp (June 21) is the parallel driver: tactical knives and EDC flashlights are top male-gift categories. The 2026 EDC trend skews 'minimalist preparedness' — flat lights, titanium knives, compact multi-tools. Section 122's 10% global tariff remains in effect after a May 12 appeals-court stay.",
+    heatScore: 78,
+    summary: "The Father's Day ramp (Sunday June 21) is now in full swing — EDC and tactical gift guides are live across the major outlets, with featured price points spanning roughly $13–$206 (knives, multi-tools, ferro rods, high-lumen lights). Post-Memorial-Day deal dynamics are unusual: 54% of adults plan to shop holiday sales (up from 36%), but average planned spend collapsed from $289 to $86 (–70%) amid high gas prices — so demand skews practical over indulgent. Section 122 (10%) plus apparel/footwear stacking is pushing imported-good prices up 10–20%.",
     sellingNow: [
-      "EDC flashlights — flat lights & compact 1,000+ lumen models",
-      "Folding knives — titanium-handle & lightweight tactical models",
-      "Multi-tools & pocket organizers (minimalist-carry trend)",
-      "EDC belts, wallets & pocket clips",
-      "Tactical bags, sling packs & admin pouches",
-      "Headlamps & compact lighting for Memorial Day camping",
+      "EDC folding knives & fixed blades (Father's Day hero category)",
+      "Multi-tools & pocket organizers",
+      "EDC flashlights & headlamps (high-lumen)",
+      "Ferro rods & pocket survival tools",
+      "Belts, pouches & EDC carry organization",
+      "Watches, compasses & value gift bundles",
     ],
     sellingNext: [
-      "Father's Day gift bundles — knife + light + multi-tool sets",
-      "Engravable / personalized knives & gift-ready packaging",
-      "Watches, tactical pens & giftable EDC accessories",
-      "Range / EDC gear bags as summer-carry season opens",
+      "Father's Day gift sets & 'build-your-own-carry' bundles (peak 6/8–6/20)",
+      "Gift cards as a hedge for last-minute / practical shoppers",
+      "Premium knives for the higher-intent gift buyer",
+      "Range / utility bags & tactical backpacks",
     ],
-    whyNext: "Memorial Day weekend kicks off the summer-carry and gifting season, and the Father's Day gift-research window opens in late May — knives and flashlights are perennial top-3 dad gifts. Tariff-driven price increases make Memorial Day promotions a 'lock in pre-hike pricing' urgency lever.",
+    whyNext: "Father's Day gifting accelerates hard through the first three weeks of June; launching bundles and gift-guide content now captures early planners. The ~70% drop in planned spend means curated, value-tiered 'practical gift' merchandising will convert better than premium-only assortments.",
     marketingAngles: {
-      email: "Subject: 'Memorial Day EDC Event — plus early Father's Day picks.' Feature gift-bundled knife / light / multi-tool sets. Push 'beat tariff price hikes.'",
-      social: "'2026 EDC trend: minimalist carry' reel showcasing flat lights and titanium folders. Unboxing of new releases.",
-      ppc: "Bid up: 'memorial day knife sale,' 'edc flashlight,' 'father's day gift for dad,' 'multi-tool.' Use bundle landing pages.",
-      sms: "Memorial Day EDC deals are LIVE — knives, flashlights & multi-tools. Beat tariff price hikes → [link].",
-    },
-  },
-  {
-    id: "hunting",
-    name: "Hunting — Turkey / Fishing",
-    icon: "TreePine",
-    urgency: "HIGH",
-    color: "#f97316",
-    heatScore: 71,
-    summary: "This week is the final stretch of spring turkey season — West Virginia closes May 24, Wisconsin May 26, with NY, PA, MN and MI running through May 30–31 and Maine the lone outlier to June 6. It's the last-call window for turkey consumables. Fishing pivots hard into summer patterns: bass move post-spawn, walleye school on flats, and catfish enter peak as water temps climb into the 70s. Memorial Day weekend (May 23–25) is the year's biggest camping-and-fishing demand spike.",
-    sellingNow: [
-      "TSS turkey loads & choke tubes for the final hunt week",
-      "Turkey calls, decoys & lightweight camo",
-      "Post-spawn bass tackle — spinnerbaits, soft plastics, deep crankbaits, jigs",
-      "Catfish gear — circle hooks, cut-bait rigs, heavy combos",
-      "Walleye tackle — jigs, live-bait rigs, crawler harnesses",
-      "Tackle boxes, line & rod/reel combos for Memorial Day trips",
-    ],
-    sellingNext: [
-      "Summer fishing transition gear — topwater, offshore baits, panfish rigs",
-      "Kayak fishing accessories & wading gear",
-      "Coolers, fillet knives & stringers",
-      "Sun-protection apparel — performance shirts, gaiters, hats",
-      "Bug repellent & Thermacell-type products",
-    ],
-    whyNext: "Once turkey seasons close (most by May 30–31), hunting-consumable demand collapses and the outdoor consumer shifts fully to summer fishing and camping — a transition that completes over Memorial Day weekend. Warm-water species feed aggressively, making late May the strongest summer-tackle window of the year.",
-    marketingAngles: {
-      email: "Subject: 'Last call — turkey season closes this week.' Late-season turkey gear for the hunting segment, paired with a 'Gear Up for Summer Fishing' cross-sell block.",
-      social: "Tip carousel: 'Post-spawn bass patterns — where the big ones go in late May.' Split with a turkey-season-closer reminder.",
-      ppc: "Dual ad groups: 'turkey choke tube' / 'tss turkey loads' (closing-fast urgency) and 'catfish rigs' / 'post spawn bass lures.'",
-      sms: "Headed to the lake this Memorial Day? Tackle, coolers & combos in stock — shop before the weekend rush → [link].",
+      email: "Subject: 'Gifts Dad will actually use — EDC picks from $13 to $206,' tiered by budget.",
+      social: "'5 EDC gifts under $50' reel targeting the practical-spend shopper. Unboxing of gift-bundle picks.",
+      ppc: "Bid up: 'father's day gifts for dad,' 'best edc knife,' 'multi-tool gift.' Use value-tiered bundle landing pages.",
+      sms: "Father's Day is 6/21. Shop EDC gifts he'll actually carry — early-bird picks live now → [link].",
     },
   },
   {
@@ -140,28 +107,58 @@ const categories = [
     icon: "Package",
     urgency: "MEDIUM",
     color: "#eab308",
-    heatScore: 68,
-    summary: "Memorial Day weekend (May 23–25) is the peak camping-demand event of late spring, with grills / outdoor cooking (28%) and summer apparel (27%) the top holiday categories — directly favoring surplus apparel, boots, and field gear. Gorpcore remains a dominant 2026 crossover trend: vintage surplus boots, cargo pants, and field jackets styled into mainstream streetwear. The Section 122 10% global tariff plus elevated China duties keep pressuring imported soft-goods costs, making authentic surplus a relative-value story.",
+    heatScore: 70,
+    summary: "Gorpcore remains a strong 2026 driver, now in a muted, earth-toned phase — clay, truffle, olive, khaki. Cargo pants, utility vests, fleece, and especially military-surplus boots (surplus Danners cited as the budget hero) carry both fashion and function appeal. Summer camping demand is rising into June, with the outdoor apparel market projected to grow from ~$39.7B toward $77.3B by 2035. Tariff exposure is acute for surplus-adjacent imports: leather/boots, packs, and apparel face 10–20% price increases, with leather/boot relief described as 'years away.'",
     sellingNow: [
-      "Combat & tactical boots — surplus & lightweight summer styles",
-      "Cargo pants / BDU trousers & field shorts",
-      "Surplus field jackets, shirts & moisture-wicking base layers",
-      "Rucksacks, ALICE / MOLLE packs & duffels",
-      "Ponchos, shelter halves & tarps",
-      "Surplus cooking gear — canteens, mess kits, folding stoves",
+      "Surplus & tactical boots (gorpcore + function crossover)",
+      "Cargo pants, utility vests & field/BDU apparel in earth tones",
+      "Surplus packs, rucks & load-bearing gear",
+      "Summer camping — tents, sleep systems, mess kits",
+      "Olive / khaki layering pieces & field shirts",
+      "Hats, gaiters & warm-weather field accessories",
     ],
     sellingNext: [
-      "Lightweight summer-weight surplus apparel & boonie hats",
-      "Sleeping systems, cots & bivy gear",
-      "Camp organization — footlockers, gear bags, organizers",
-      "Insect-season gear — mosquito nets, gaiters",
+      "Hot-weather camping gear — tarps, hammocks, breathable layers",
+      "Insect & sun-protection field apparel",
+      "Father's Day-friendly surplus apparel & boots",
+      "Bulk / value surplus bundles ahead of summer trips",
     ],
-    whyNext: "Memorial Day weekend traditionally launches the summer camping season, and surplus packs, apparel, and shelter gear ride that demand directly. With tariffs lifting prices on name-brand imported outdoor apparel, durable authentic surplus becomes a sharper value proposition for budget-cautious 2026 shoppers.",
+    whyNext: "Camping participation climbs through June and gorpcore keeps surplus apparel culturally relevant beyond core customers. With tariffs lifting import prices 10–20%, genuine surplus stock becomes a value differentiator worth merchandising aggressively before any further tariff actions land.",
     marketingAngles: {
-      email: "Subject: 'Memorial Day Camp-Out Event — surplus packs, boots & shelter gear.' Feature a camping bundle; compare surplus vs. tariff-inflated retail.",
-      social: "Gorpcore styling reel: 'Field jacket + cargos — the surplus look everyone's wearing in 2026.'",
-      ppc: "Bid up: 'military surplus boots,' 'alice pack,' 'bdu pants,' 'cheap camping gear.' Add Memorial Day promo extensions.",
-      sms: "Memorial Day = camping season. Surplus packs, boots & tarps — built tough, priced right → [link].",
+      email: "Subject: 'Surplus boots & field gear — real gorpcore, real value (before prices climb).'",
+      social: "'Why surplus Danners beat the $300 trend boots' styling reel in earth tones.",
+      ppc: "Bid up: 'military surplus boots,' 'tactical cargo pants,' 'surplus backpack,' 'cheap camping gear.'",
+      sms: "Tariffs are pushing boot prices up 10–20%. Genuine surplus still in stock — shop now → [link].",
+    },
+  },
+  {
+    id: "hunting",
+    name: "Hunting — Turkey / Fishing",
+    icon: "TreePine",
+    urgency: "MEDIUM",
+    color: "#eab308",
+    heatScore: 64,
+    summary: "Spring turkey is in its final closing days — Pennsylvania (through 5/30), New York (through 5/31), Wisconsin (through 5/26) and the New England states all wrap this week, with only Maine extending to June 6. Meanwhile the calendar tips fully into the summer fishing transition: post-spawn largemouth holding shallow at dawn and dusk, walleye schooling in 8–20 ft along weed lines, channel catfish feeding hard after dark, and bluegill/crappie spawning into June as water hits the mid-60s–70s. This is the cleanest turkey-to-fishing handoff week of the year.",
+    sellingNow: [
+      "TSS turkey loads, calls & decoys (final-days closeout — PA/NY/ME)",
+      "Post-spawn bass tackle — soft plastics, topwater, weightless rigs",
+      "Walleye gear — bottom-bouncers, worm harnesses, crankbaits",
+      "Catfish setups — cut-bait rigs, glow floats, rod holders",
+      "Panfish kits — light jigs, slip bobbers, ultralight combos",
+      "Tackle storage, polarized sunglasses & quick-dry apparel",
+    ],
+    sellingNext: [
+      "Kayaks, float tubes & trolling motors (summer on-water push)",
+      "Coolers & live-well / bait management gear",
+      "Bug / tick protection & UPF sun apparel",
+      "Bank-fishing & night-fishing lighting",
+    ],
+    whyNext: "As turkey closes nationwide, spend rotates entirely to fishing and general summer recreation; the post-spawn bite and warming panfish window drive the highest-participation weeks of early summer. Father's Day (6/21) further pulls fishing gear into gift consideration.",
+    marketingAngles: {
+      email: "Subject: 'Last call: turkey-season closeout + your summer fishing starter kit.'",
+      social: "Short clip 'Where bass go after the spawn' leading into a shallow-water lure carousel.",
+      ppc: "Bid up: 'post spawn bass lures,' 'walleye crankbaits,' 'turkey call closeout,' 'catfish rigs.'",
+      sms: "Turkey season's closing this week. Switch to summer fishing — post-spawn tackle restocked → [link].",
     },
   },
 ];
@@ -170,46 +167,46 @@ const categories = [
 const heatData = categories.map((c) => ({ name: c.name.split(" —")[0].split(" /")[0], score: c.heatScore, fill: c.color }));
 
 const channelPriorityData = [
-  { channel: "Email", weather: 90, turkey: 80, emergency: 95, edc: 88, surplus: 70 },
-  { channel: "Social", weather: 82, turkey: 85, emergency: 78, edc: 90, surplus: 88 },
-  { channel: "PPC", weather: 95, turkey: 75, emergency: 96, edc: 90, surplus: 65 },
-  { channel: "SMS", weather: 96, turkey: 72, emergency: 98, edc: 80, surplus: 60 },
+  { channel: "Email", weather: 90, turkey: 78, emergency: 96, edc: 90, surplus: 70 },
+  { channel: "Social", weather: 82, turkey: 82, emergency: 80, edc: 92, surplus: 88 },
+  { channel: "PPC", weather: 94, turkey: 75, emergency: 97, edc: 92, surplus: 68 },
+  { channel: "SMS", weather: 95, turkey: 70, emergency: 98, edc: 82, surplus: 60 },
 ];
 
 const weeklyCalendar = [
-  { day: "Mon 5/18", action: "Launch 'Storm Week' email — severe weather outbreak forecast for the Plains today; lead with weather radios, lighting, power stations. Pre-build the May 21 NOAA-reaction email so it's ready to fire." },
-  { day: "Tue 5/19", action: "'Last Call: Turkey Season' push to the hunting segment (WV closes 5/24); cross-sell summer fishing tackle. Keep storm-prep ads live as severe storms continue TX / MS Valley." },
-  { day: "Wed 5/20", action: "Launch the Memorial Day Sale early-access window — EDC, surplus camping gear, and fishing tackle bundles. Email + social teaser." },
-  { day: "Thu 5/21", action: "PRIMARY ACTION — fire the 'NOAA 2026 Hurricane Outlook Is OUT' email + SMS the moment the 11 a.m. EDT briefing ends. Surge PPC on hurricane / emergency-kit keywords. Post the 'below-normal ≠ no risk' social myth-buster." },
-  { day: "Fri 5/22", action: "Full Memorial Day Sale goes live site-wide. Reinforce emergency-prep messaging. Heatwave cooling-gear social post." },
-  { day: "Sat 5/23", action: "Memorial Day weekend peak — 'Camping & Fishing This Weekend?' SMS featuring surplus packs, coolers, tackle. Boost top-converting Memorial Day ads." },
-  { day: "Sun 5/24", action: "'Sale Ends Monday' Memorial Day urgency email; final turkey-season-closer (WV) note; tease Father's Day gifting — knives & lights — for the week ahead." },
+  { day: "Mon 5/25", action: "Memorial Day: run the 'Honor & Prepare' sale finale — surplus apparel + EDC, with thank-the-troops messaging." },
+  { day: "Tue 5/26", action: "Launch the post-Memorial-Day 'Prep for Hurricane Season' email — 6-day countdown to June 1, emergency-kit hero." },
+  { day: "Wed 5/27", action: "Fishing-transition push — 'Turkey's closing, fishing's open': post-spawn tackle promo with a turkey-load closeout banner." },
+  { day: "Thu 5/28", action: "Father's Day soft launch — tiered EDC gift guide ($13–$206), value-tier emphasis given soft spending." },
+  { day: "Fri 5/29", action: "Weather-reactive flash promo — rain gear / tarps / radios tied to active TX–Northeast flooding, plus heat gear for the Midwest." },
+  { day: "Sat 5/30", action: "Weekend 'Summer Camp Kickoff' — surplus boots, camping gear, gorpcore styling. Capture PA hunters as turkey season ends." },
+  { day: "Sun 5/31", action: "Final hurricane-season countdown — 'Season opens tomorrow': emergency kits, water, power. SMS blast at peak." },
 ];
 
 const topKeywords = [
-  { keyword: "hurricane prep kit", volume: "Very High", cpc: "$2.40", competition: "High", priority: "🔴" },
-  { keyword: "emergency survival kit", volume: "High", cpc: "$2.10", competition: "High", priority: "🔴" },
-  { keyword: "noaa weather radio", volume: "High", cpc: "$1.30", competition: "Med", priority: "🔴" },
-  { keyword: "portable power station", volume: "High", cpc: "$3.20", competition: "High", priority: "🟠" },
-  { keyword: "memorial day knife sale", volume: "Med", cpc: "$1.60", competition: "Med", priority: "🟠" },
-  { keyword: "military surplus boots", volume: "Med", cpc: "$1.10", competition: "Med", priority: "🟠" },
-  { keyword: "edc flashlight", volume: "High", cpc: "$1.70", competition: "High", priority: "🟠" },
-  { keyword: "tss turkey loads", volume: "Low", cpc: "$0.95", competition: "Low", priority: "🟡" },
+  { keyword: "hurricane prep kit", volume: "High", cpc: "$1.80", competition: "High", priority: "🔴" },
+  { keyword: "emergency water storage", volume: "High", cpc: "$1.40", competition: "Med", priority: "🔴" },
+  { keyword: "weather radio NOAA", volume: "High", cpc: "$1.10", competition: "Med", priority: "🔴" },
+  { keyword: "father's day gifts for dad", volume: "Very High", cpc: "$1.30", competition: "High", priority: "🔴" },
+  { keyword: "best EDC knife", volume: "High", cpc: "$1.60", competition: "High", priority: "🟠" },
+  { keyword: "military surplus boots", volume: "Med", cpc: "$0.95", competition: "Med", priority: "🟠" },
   { keyword: "post spawn bass lures", volume: "Med", cpc: "$0.85", competition: "Med", priority: "🟡" },
-  { keyword: "alice pack / molle backpack", volume: "Med", cpc: "$1.00", competition: "Med", priority: "🟡" },
+  { keyword: "multi-tool gift", volume: "Med", cpc: "$1.15", competition: "Med", priority: "🟠" },
+  { keyword: "wildfire smoke mask N95", volume: "Med", cpc: "$1.05", competition: "Med", priority: "🟡" },
+  { keyword: "tactical cargo pants", volume: "Med", cpc: "$0.90", competition: "Med", priority: "🟡" },
 ];
 
 const tariffImpact = [
-  { item: "Tactical / Outdoor Apparel & Cargo Pants (China + global)", tariff: "10%+", priceImpact: "+8-15% retail; brands raising prices late May", action: "Promote pre-hike in-stock inventory as a Memorial Day value" },
-  { item: "Imported Backpacks & Packs", tariff: "10%+", priceImpact: "+10-15%; some brands can't forecast FY26", action: "Push current-priced packs for camping; feature surplus alternatives" },
-  { item: "Imported Footwear / Combat Boots", tariff: "10-20%", priceImpact: "De minimis exemption ended; some brands paused US shipments", action: "Position military surplus boots as the tariff-insulated value play" },
-  { item: "EDC Flashlights & Multi-Tools (China)", tariff: "~30%+", priceImpact: "+15-25% on import-dependent SKUs", action: "Bundle for Father's Day now; 'lock in pricing before hikes'" },
-  { item: "TSS Turkey Loads (tungsten — imported)", tariff: "10%+", priceImpact: "Modest +5-10% on premium loads", action: "Clear remaining stock during the final turkey-season week" },
+  { item: "Technical Backpacks (Vietnam)", tariff: "10%+ (up to ~25% stacked)", priceImpact: "+~10-20% at retail", action: "Stock now; feature pre-increase pricing as an urgency hook" },
+  { item: "Boots & Leather Goods (China & Vietnam)", tariff: "30-70% CN / 0-32% VN", priceImpact: "+10-20%; relief 'years away'", action: "Lean into genuine surplus boots as the value alternative" },
+  { item: "Field / Cargo Apparel (China & Vietnam)", tariff: "30-70% CN / 0-32% VN", priceImpact: "+10-20% on imported soft goods", action: "Promote earth-tone surplus apparel margin advantage" },
+  { item: "TSS Turkey Loads (imported components)", tariff: "Sec 122 10% layer", priceImpact: "Modest single-digit %", action: "Close out remaining season stock before reorder repricing" },
+  { item: "General Imported Gear (Sec 122 / IEEPA)", tariff: "10% to 7/24; IEEPA 20% struck", priceImpact: "Volatile — appeals stay keeps collection on", action: "Monitor July 24 expiry; avoid overcommitting forward buys" },
 ];
 
 // ─── COMPONENTS ────────────────────────────────────────────────────────────────
 
-const COLORS = ["#ef4444", "#ef4444", "#f97316", "#f97316", "#eab308"];
+const COLORS = ["#ef4444", "#f97316", "#f97316", "#eab308", "#eab308"];
 
 const TabButton = ({ active, onClick, children, color }) => (
   <button
@@ -355,8 +352,8 @@ export default function ArmyNavyTrendDashboard() {
       <div className="bg-red-950 border border-red-800 rounded-lg p-3 mb-6 flex items-start gap-3">
         <AlertTriangle size={20} className="text-red-400 mt-0.5 flex-shrink-0" />
         <div>
-          <p className="text-sm font-bold text-red-300">CRITICAL ALERT — NOAA 2026 Hurricane Outlook + Severe Weather Week</p>
-          <p className="text-xs text-red-400 mt-1">NOAA releases its official 2026 Atlantic hurricane outlook Thursday May 21 (11 a.m. EDT) — nine days before the June 1 season open. A possible severe weather outbreak hits the Plains May 18, while a record-challenging heatwave grips 22 Eastern and Southern states. Pre-stage emergency-prep inventory and content now.</p>
+          <p className="text-sm font-bold text-red-300">CRITICAL ALERT — Atlantic Hurricane Season Opens June 1</p>
+          <p className="text-xs text-red-400 mt-1">Hurricane season opens Monday June 1 — six days out. NOAA's May 21 outlook calls for a below-normal season (8–14 named storms), but officials are hammering 'it only takes one.' Meanwhile flash-flood and damaging-wind risk runs from Texas to New York through late week, and wildfire smoke is reaching the Midwest, Great Lakes and Northeast. Prepare now, before the season opens.</p>
         </div>
       </div>
 
@@ -422,16 +419,16 @@ export default function ArmyNavyTrendDashboard() {
             <h2 className="text-lg font-bold mb-3 flex items-center gap-2"><Zap size={18} className="text-yellow-400" /> Top 3 Actions This Week</h2>
             <div className="space-y-3">
               <div className="bg-red-950/50 border border-red-800/50 rounded-lg p-3">
-                <p className="text-sm font-semibold text-red-300">1. NOAA Hurricane Outlook Reaction (Thu 5/21)</p>
-                <p className="text-xs text-gray-300 mt-1">NOAA releases its official 2026 Atlantic hurricane outlook Thursday at 11 a.m. EDT. Pre-stage the email, SMS, and PPC surge now and fire the moment the briefing ends — this is the week's defining sales event.</p>
+                <p className="text-sm font-semibold text-red-300">1. Hurricane Season Countdown (Season opens 6/1)</p>
+                <p className="text-xs text-gray-300 mt-1">The Atlantic season opens Monday — six days out. Despite NOAA's below-normal forecast, 'it only takes one' is the official line. Front-load kit, water, power, and radio merchandising and run a daily countdown; close it with a Sunday 'season opens tomorrow' SMS blast.</p>
               </div>
               <div className="bg-orange-950/50 border border-orange-800/50 rounded-lg p-3">
-                <p className="text-sm font-semibold text-orange-300">2. Storm + Heat Dual Campaign (Mon–Thu)</p>
-                <p className="text-xs text-gray-300 mt-1">A severe weather outbreak threatens the Plains May 18 while a record heatwave grips 22 Eastern states. Sell storm-prep gear and cooling/hydration products in the same week — two demand streams, one campaign.</p>
+                <p className="text-sm font-semibold text-orange-300">2. Father's Day Value Bundles (Soft launch Thu)</p>
+                <p className="text-xs text-gray-300 mt-1">Father's Day is June 21 and EDC is the hero gift category. With planned spend down ~70% to ~$86, lead with tiered, practical value bundles ($13–$206), not premium-only assortments. Launch the gift guide now to capture early planners.</p>
               </div>
               <div className="bg-orange-950/50 border border-orange-800/50 rounded-lg p-3">
-                <p className="text-sm font-semibold text-orange-300">3. Memorial Day Sale + Father's Day Ramp (Wed onward)</p>
-                <p className="text-xs text-gray-300 mt-1">Memorial Day participation is up (54% plan a purchase) but spend is down ~70% — lead with value bundles and lower-ticket EDC, tackle, and surplus camping gear. Bridge into the Father's Day knife/flashlight gifting ramp.</p>
+                <p className="text-sm font-semibold text-orange-300">3. Turkey-to-Fishing Handoff (Mid-week)</p>
+                <p className="text-xs text-gray-300 mt-1">Spring turkey closes this week in PA, NY, WI and New England. Run a turkey-load closeout while pivoting the hunting segment to post-spawn bass, walleye, and catfish tackle — the cleanest seasonal handoff of the year.</p>
               </div>
             </div>
           </div>
@@ -457,10 +454,10 @@ export default function ArmyNavyTrendDashboard() {
         <div className="space-y-3">
           <h2 className="text-lg font-bold flex items-center gap-2"><ShoppingCart size={18} /> Weekly Marketing Action Plan</h2>
           {weeklyCalendar.map((day, i) => (
-            <div key={i} className={`rounded-lg p-3 ${i === KEY_DAY_INDEX ? "bg-red-950/50 border border-red-800" : "bg-gray-900"}`}>
+            <div key={i} className={`rounded-lg p-3 ${i === TODAY_INDEX ? "bg-red-950/50 border border-red-800" : "bg-gray-900"}`}>
               <div className="flex items-center gap-2 mb-1">
-                <span className={`text-sm font-bold ${i === KEY_DAY_INDEX ? "text-red-300" : "text-green-400"}`}>{day.day}</span>
-                {i === KEY_DAY_INDEX && <span className="text-xs bg-red-800 text-red-200 px-1.5 py-0.5 rounded">KEY DAY</span>}
+                <span className={`text-sm font-bold ${i === TODAY_INDEX ? "text-red-300" : "text-green-400"}`}>{day.day}</span>
+                {i === TODAY_INDEX && <span className="text-xs bg-red-800 text-red-200 px-1.5 py-0.5 rounded">TODAY</span>}
               </div>
               <p className="text-sm text-gray-300">{day.action}</p>
             </div>
@@ -501,9 +498,9 @@ export default function ArmyNavyTrendDashboard() {
           <div className="bg-gray-900 rounded-xl p-4">
             <h3 className="text-sm font-bold text-gray-300 mb-2">Geo-Targeting Recommendations</h3>
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Storm Prep:</strong> <span className="text-gray-300">NE, KS, TX, MO, IA + MS/OH Valley & Mid-Atlantic</span></div>
-              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Hurricane / Emergency:</strong> <span className="text-gray-300">Gulf & Atlantic coast — TX, LA, FL, GA, SC, NC</span></div>
-              <div className="bg-orange-950/30 rounded p-2"><strong className="text-orange-400">Turkey / Fishing:</strong> <span className="text-gray-300">WV, WI, PA, NY, MN, MI, ME + nationwide fishing</span></div>
+              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Hurricane / Emergency:</strong> <span className="text-gray-300">Gulf & Atlantic coast — TX, LA, FL, GA, SC, NC + smoke belt</span></div>
+              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Storm / Flood:</strong> <span className="text-gray-300">TX, LA, TN, KY, OH Valley → NY; Upper Midwest heat</span></div>
+              <div className="bg-orange-950/30 rounded p-2"><strong className="text-orange-400">Turkey / Fishing:</strong> <span className="text-gray-300">PA, NY, WI, ME (closing) + nationwide fishing</span></div>
               <div className="bg-yellow-950/30 rounded p-2"><strong className="text-yellow-400">EDC / Surplus:</strong> <span className="text-gray-300">Nationwide — metro areas for EDC, rural for surplus</span></div>
             </div>
           </div>
@@ -514,7 +511,7 @@ export default function ArmyNavyTrendDashboard() {
       {activeTab === "tariffs" && (
         <div className="space-y-4">
           <h2 className="text-lg font-bold flex items-center gap-2"><AlertTriangle size={18} className="text-yellow-400" /> Tariff Impact Watch</h2>
-          <p className="text-sm text-gray-400">Section 122's 10% global tariff remains fully in effect — the Federal Circuit issued a May 12 stay keeping it live during appeal. Here's what to act on now.</p>
+          <p className="text-sm text-gray-400">Section 122's 10% global tariff is still being collected (a May 12 appeals-court stay kept it alive) and expires July 24 — while the Supreme Court struck the separate 20% IEEPA layer. Pricing is volatile. Here's what to act on now.</p>
           <div className="bg-gray-900 rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -541,14 +538,14 @@ export default function ArmyNavyTrendDashboard() {
           </div>
           <div className="bg-yellow-950/30 border border-yellow-800/50 rounded-lg p-4">
             <h3 className="text-sm font-bold text-yellow-300 mb-2">Strategic Takeaway</h3>
-            <p className="text-sm text-gray-300">Tariffs are still live and refunds are not flowing: the May 7 court ruling against Section 122 applies only to named plaintiffs, and the May 12 appeals-court stay keeps the 10% global tariff in effect for everyone else through expedited briefing. For this week, 'buy before prices rise' remains a credible, honest urgency message. Position Army Navy Outdoors as the value destination — authentic military surplus is the tariff-insulated alternative as name-brand imported apparel, packs, and footwear climb 10–25%.</p>
+            <p className="text-sm text-gray-300">Tariffs are both a margin threat and a marketing weapon. Imported soft goods — boots, packs, apparel — are up 10–20% with relief 'years away,' while the legal picture stays unsettled: the CIT struck Section 122 on May 7 but the Federal Circuit stayed that May 12, so CBP keeps collecting the 10% from nearly all importers through the July 24 statutory cap, and the Supreme Court's 6-3 ruling struck the separate 20% IEEPA layer. Position Army Navy Outdoors as the in-stock, pre-increase value play — genuine military surplus is the tariff-insulated alternative. Avoid overcommitting forward buys until the July picture clears.</p>
           </div>
         </div>
       )}
 
       {/* Footer */}
       <div className="mt-8 pt-4 border-t border-gray-800 text-center">
-        <p className="text-xs text-gray-600">Army Navy Outdoors — Weekly Trend Intelligence | Generated {SCAN_DATE} | Sources: NOAA, SPC, Colorado State University, AccuWeather, Ready.gov, OutdoorHub, KY Fish & Wildlife, BDO, Inside Radio, GearJunkie</p>
+        <p className="text-xs text-gray-600">Army Navy Outdoors — Weekly Trend Intelligence | Generated {SCAN_DATE} | Sources: NOAA, NHC, SPC, AccuWeather, NWTF, MeatEater, Benchmade, GearJunkie, NBC Select, Skadden, CNBC</p>
       </div>
     </div>
   );
