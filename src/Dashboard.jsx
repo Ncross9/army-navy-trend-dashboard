@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from "recharts";
-import { AlertTriangle, TrendingUp, Zap, Target, Shield, CloudLightning, ShoppingCart, Mail, MessageSquare, DollarSign, TreePine, Package, ChevronDown, ChevronUp, ExternalLink, Database, AlertOctagon } from "lucide-react";
+import { AlertTriangle, TrendingUp, Zap, Target, Shield, CloudLightning, ShoppingCart, Mail, MessageSquare, DollarSign, HeartPulse, Package, ChevronDown, ChevronUp, ExternalLink, Database, AlertOctagon } from "lucide-react";
 
 // ─── DATA: BAKED IN FROM JULY 20 2026 RESEARCH + REAL STORE SALES (1,403 SKUs) ─
 
@@ -202,37 +202,54 @@ const categories = [
     },
   },
   {
-    id: "hunting",
-    name: "Hunting — Turkey / Fishing",
-    icon: "TreePine",
-    urgency: "MEDIUM",
-    color: "#eab308",
-    heatScore: 64,
-    summary: "Deep summer fishing + pre-fall-hunting planning window. Not a category the store stocks.",
+    id: "medical",
+    name: "Medical & Trauma",
+    icon: "HeartPulse",
+    urgency: "HIGH",
+    color: "#f97316",
+    heatScore: 76,
+    summary: "This tile permanently replaces the long-empty Hunting / Fishing category (0 stocked SKUs for 8+ weeks). Medical & trauma remains the store's most consistent breakout cluster: 84 SKUs across 4 weeks of persistent acceleration — IFAK pouches, CAT tourniquets, tourniquet holders, hemostats, conforming gauze, ABD pads. Maps onto every ongoing theme: hurricane-peak trauma prep, heat-emergency response, and the IFAK build-out that shares a customer with your MRE / MOLLE pouch buyers.",
     sellingNow: [
-      "Summer bass, walleye & catfish tackle",
-      "Coolers, fillet knives & live wells",
-      "UPF apparel, polarized sunglasses & bug repellent",
-      "Kayak fishing accessories",
-      "Trail cameras (fall scouting starts)",
-      "Early bow hunting supplies",
+      "USMC Zipper IFAK First Aid Kit Pouch (2.1× breakout, 18 sold in 7d)",
+      "CAT Tourniquets (previously issued) — 32 d30",
+      "IFAK pouches — MOLLE, ALICE & Multicam variants",
+      "Conforming gauze rolls & compressed packing gauze",
+      "Emergency trauma dressings (8×10 ETD)",
+      "Water-Jel burn dressings (heat / cookout season)",
     ],
     sellingNext: [
-      "Trail cameras & bait stations (fall scouting)",
-      "Bow-hunting accessories & broadheads",
-      "Fall camo & scent-control gear",
-      "Early-season waterfowl decoys",
+      "Complete IFAK builds bundled with MRE cases",
+      "NAR C-A-T Tourniquet holders (Grade 1 & 2)",
+      "Tourniquet + trauma-shears combos for range/EDC bags",
+      "Burn care ahead of August grilling + heat weekend",
     ],
-    whyNext: "August is trail-camera + fall-scouting month — hunters prep before September archery seasons open.",
+    whyNext: "Trauma consumables re-order fast once customers build a kit, and the accelerating SKUs share a buyer with your #1 category (MRE / kit builders). Hurricane peak season (Aug 1+) and continued heat expose more injury scenarios; IFAK build-out demand is durable, not seasonal.",
     marketingAngles: {
-      email: "Subject: 'Summer fishing + fall scouting starts now.'",
-      social: "Trail-camera and scouting-strategy reels for early archery.",
-      ppc: "Bid up: 'trail camera,' 'summer bass lures,' 'polarized sunglasses.'",
-      sms: "Fall scouting starts now — trail cams, bug spray & bow prep → [link].",
+      email: "Subject: 'Build your IFAK before peak hurricane season.' Tourniquet + gauze + emergency-blanket bundles; burn care for cookout season.",
+      social: "'What's actually in a real IFAK' reel — tourniquet, hemostat, gauze, blanket. Tie to hurricane / range / camping safety.",
+      ppc: "Bid up: 'cat tourniquet,' 'ifak kit,' 'trauma kit,' 'burn dressing,' 'emergency blanket.' Bundle copy for higher AOV.",
+      sms: "Trauma & IFAK essentials in stock — tourniquets, gauze & burn dressings shipping today → [link].",
     },
     storeData: {
-      notStocked: true,
-      insight: "UNCHANGED FOR 6+ WEEKS: 0 hunting/turkey/fishing SKUs across all 1,403 active products. This tile still shows 'not stocked' — recommend pivoting to a real category. Based on current sales mix, best replacements would be 'MREs & Food Storage' (your #1 by volume) or 'Ammo Cans, Canteens & Storage' (capturing the July breakouts).",
+      topSellers: [
+        { name: "Military Surplus IFAK Combat First Aid Kit (LBT — Expired)", d30: 59, d7: 8 },
+        { name: "USMC Zipper IFAK First Aid Kit Pouch", d30: 36, d7: 18 },
+        { name: "CAT Tourniquet, Previously Issued", d30: 32, d7: 9 },
+        { name: "U.S. Issue OCP Multicam IFAK II Medical Pouch", d30: 32, d7: 0 },
+        { name: "Conforming Gauze Roll Stretch Bandage", d30: 23, d7: 2 },
+        { name: "3-Pack GI OD IFAK Nylon 1st Aid ALICE Pouch (New)", d30: 22, d7: 4 },
+      ],
+      trending: [
+        { name: "Military Issue CAT Tourniquet & TQ Holder (NAR, Unissued)", d7: 6, d30: 6, mult: 4.3 },
+        { name: "USMC Zipper IFAK First Aid Kit Pouch", d7: 18, d30: 36, mult: 2.1 },
+        { name: "8×10 Emergency Trauma Dressing (ETD)", d7: 3, d30: 5, mult: 2.6 },
+        { name: "Army Multicam CAT Tourniquet Pouch", d7: 3, d30: 6, mult: 2.1 },
+        { name: "NAR C-A-T Tourniquet Holder (Grade 2)", d7: 7, d30: 17, mult: 1.8 },
+      ],
+      cold: [
+        { name: "U.S. Issue OCP Multicam IFAK II Medical Pouch", d7: 0, d30: 32 },
+      ],
+      insight: "This is your MOST CONSISTENT breakout cluster across 4+ weeks — five SKUs still accelerating 1.8–4.3× in the July 20 data. USMC Zipper IFAK Pouch alone sold 18 units last week. Bundle CAT Tourniquet + gauze + ETD + emergency blanket into a homepage-featured IFAK kit. OOS ALERT: OCP Multicam IFAK II Medical Pouch went from 32 d30 to 0 d7 and 0 on hand — another stockout-kills-demand loss unless restocked.",
     },
   },
 ];
@@ -314,7 +331,7 @@ const outOfStockRisk = [
 
 // ─── COMPONENTS ────────────────────────────────────────────────────────────────
 
-const COLORS = ["#ef4444", "#f97316", "#f97316", "#eab308", "#eab308"];
+const COLORS = ["#ef4444", "#f97316", "#f97316", "#eab308", "#f97316"];
 
 const TabButton = ({ active, onClick, children, color }) => (
   <button
