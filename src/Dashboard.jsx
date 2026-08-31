@@ -2,12 +2,12 @@ import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from "recharts";
 import { AlertTriangle, TrendingUp, Zap, Target, Shield, CloudLightning, ShoppingCart, Mail, MessageSquare, DollarSign, HeartPulse, Package, ChevronDown, ChevronUp, ExternalLink, Database, AlertOctagon } from "lucide-react";
 
-// ─── DATA: BAKED IN FROM AUG 10 2026 RESEARCH + REAL STORE SALES (4,833 SKUs) ──
+// ─── DATA: BAKED IN FROM AUG 31 2026 RESEARCH + REAL STORE SALES (1,445 SKUs) ──
 
-const SCAN_DATE = "August 10, 2026";
-const SCAN_WEEK = "Week of August 10–16, 2026";
-const TODAY_INDEX = 0; // Mon 8/10 — scan day
-const STORE_DATA_SOURCE = "30-Day Sales Forecasting Report — 4,833 SKUs, 30/90/180/365-day velocity";
+const SCAN_DATE = "August 31, 2026";
+const SCAN_WEEK = "Week of Aug 31 – Sept 6, 2026 (Labor Day week)";
+const TODAY_INDEX = 0; // Mon 8/31 — scan day
+const STORE_DATA_SOURCE = "7-Day Sales Forecasting Report — 1,445 SKUs, 7-day + 30-day order velocity";
 
 const urgencyLevels = { CRITICAL: "🔴", HIGH: "🟠", MEDIUM: "🟡", WATCH: "🟢" };
 
@@ -18,48 +18,45 @@ const categories = [
     icon: "Shield",
     urgency: "CRITICAL",
     color: "#ef4444",
-    heatScore: 92,
-    summary: "Atlantic hurricane season is ramping up hard. NHC is tracking TWO systems today — one with a 60% chance of becoming a tropical depression within 7 days as it moves west across the central tropical Atlantic. Peak (climatological Sept 10) is ~30 days out. Two named storms so far this season. Your MRE inventory is in month-3 of acute crisis: Chicken Burrito Bowl at 1.6 days of cover, Genuine 1-Meal Pack at 1.4 days. MRE accessory bundles (Crackers 6-pack, Heater 6-pack, Drink Mixes) are the persistent breakout cluster.",
+    heatScore: 94,
+    summary: "Hurricane season climatological peak is Sept 10 (10 days out). Season is quiet so far — 4 named storms (Arthur, Bertha, Cristobal, Dolly), NO hurricanes yet, behind typical pace — but NHC is monitoring TWO disturbances now at 50% development odds (Invest 95L SE of Bermuda + tropical wave off Africa). Your MRE Chicken Burrito Bowl demand nearly doubled month-over-month (1,199 → 2,196 d30) with only 60 on hand — 0.8 days of cover.",
     sellingNow: [
-      "MRE cases & entrees (your #1 category, chronically OOS)",
-      "6-Pack MRE accessories (Crackers +2.2×, Heaters +1.9×, Drink Mixes +1.5×)",
-      "P-38 / P-51 can openers (steady after restock)",
-      "NOAA weather radios, batteries & lanterns",
-      "Water storage, filtration & purification tablets",
-      "MRE Entree GI Single-Pack (new top seller, 444 d30 healthy stock)",
+      "MRE Chicken Burrito Bowl (2,196 d30 — your monster SKU, 0.8d cover)",
+      "GI MRE Case (505 d30, 1.4d cover — chronic OOS)",
+      "MRE Entree line (Beef Stew, Jambalaya, Pasta, Mexican Beef — all 260-280 d30, healthy stock)",
+      "Genuine US Issue MRE 1-Meal Pack (249 d30, 0.7d cover)",
+      "GI MRE A&B 2-Pack (158 d30, 2.3d cover)",
+      "P-51 Can Opener (steady)",
     ],
     sellingNext: [
-      "Full hurricane-prep kits as season peaks toward Sept 10",
-      "Generators & fuel storage for Gulf/Atlantic coast",
-      "Long-term food storage buckets (30/60/90-day kits)",
-      "Emergency comms / ham radio gear (post-storm outages)",
+      "Hurricane-prep bundles ahead of Sept 10 peak",
+      "Restocked MRE 6-Pack accessories (Crackers, Snack Pack — both went cold at 0 oh)",
+      "Fall/Labor Day camping food kits",
+      "Long-term food storage buckets (3-6 month kits)",
     ],
-    whyNext: "September 10 is the climatological peak — every NHC bulletin drives immediate hurricane-prep demand. The MRE 6-pack accessory pattern shows customers building full-assortment kits, not one-off purchases; bundle for higher AOV.",
+    whyNext: "September 10 climatological peak is 10 days out. If either NHC disturbance develops, demand spikes immediately. Labor Day weekend also drives fall camping / hunting-camp food purchases. MRE 6-Pack Crackers and Snack Pack going cold isn't fading demand — it's stockout (both at 0 oh, 150 & 118 d30). Restock to recapture.",
     marketingAngles: {
-      email: "Subject: 'Hurricane peak in 30 days — NHC is tracking two systems now.' Lead with restocked MRE cases, accessory 6-packs, and water/power kits.",
-      social: "'NHC currents: 2 systems, 60% chance of the first tropical depression this week.' Live map + kit checklist reel.",
-      ppc: "Aggressive bids on 'mre case,' 'hurricane prep kit,' 'weather radio,' 'emergency water storage,' 'p-38 can opener.' Gulf/Atlantic geo-boost.",
-      sms: "NHC tracking 2 systems. Hurricane peak in 30 days — MRE cases, water & power kits shipping today → [link].",
+      email: "Subject: 'Hurricane peak in 10 days — 2 NHC systems at 50%.' MRE case + accessory + water bundle. Feature the restocked Beef Stew / Jambalaya / Pasta line.",
+      social: "'Season's been quiet — but 2 systems at 50% and peak in 10 days.' Live NHC map + kit reel.",
+      ppc: "Aggressive: 'mre case,' 'hurricane prep kit,' 'weather radio,' 'emergency water storage,' 'labor day camping food.'",
+      sms: "Hurricane peak in 10 days. 2 systems at 50% — MRE cases & water shipping today → [link].",
     },
     storeData: {
       topSellers: [
-        { name: "MRE Entree — Chicken Burrito Bowl", d30: 1199, d90: 3784 },
-        { name: "2026 GI MRE Case A or B", d30: 600, d90: 2077 },
-        { name: "MRE Entree GI Entree, Single Pack", d30: 444, d90: 1068 },
-        { name: "Genuine US Issue MRE — 1-Meal Pack", d30: 377, d90: 880 },
-        { name: "MRE Entree GI Entree, 2-Pack", d30: 370, d90: 890 },
-        { name: "P-38 Can Opener — U.S. Shelby Co.", d30: 260, d90: 1240 },
+        { name: "MRE Entree — Chicken Burrito Bowl", d30: 2196, d7: 513 },
+        { name: "2026 GI MRE Case A or B", d30: 505, d7: 83 },
+        { name: "MRE Entree — Beef Stew", d30: 277, d7: 36 },
+        { name: "MRE Chicken and Sausage Jambalaya", d30: 272, d7: 35 },
+        { name: "MRE Pasta w/ Marinara + Veggie Crumbles (Veg)", d30: 261, d7: 35 },
+        { name: "MRE Mexican Beef with Vegetables", d30: 260, d7: 34 },
       ],
-      trending: [
-        { name: "6-Pack MRE Crackers and Breads", d7: 178, d30: 238, mult: 2.2 },
-        { name: "MRE Heater Pack of 6", d7: 75, d30: 117, mult: 1.9 },
-        { name: "6-Pack MRE Drink Mixes", d7: 67, d30: 132, mult: 1.5 },
-      ],
+      trending: [],
       cold: [
-        { name: "MRE Military Peanut Butter Spread", d7: 14, d30: 198 },
-        { name: "U.S. Military Foliage Sandbags (Single)", d7: 0, d30: 80 },
+        { name: "6-Pack MRE Crackers and Breads", d7: 0, d30: 150 },
+        { name: "6-Pack MRE Snack Pack", d7: 0, d30: 118 },
+        { name: "U.S. Military Issue Sandbags (Olive)", d7: 0, d30: 210 },
       ],
-      insight: "🚨 CRISIS CONTINUES: Chicken Burrito Bowl at 1.6 days cover (62 oh, 1,199 d30); Genuine 1-Meal Pack at 1.4 days (18 oh, 377 d30). GOOD: MRE Entree GI Single/2-Pack are healthier (244 & 76 oh). BREAKOUT: MRE accessory 6-packs are the cleanest cluster — Crackers 2.2× (178 d30 vs 238 d90), Heaters 1.9×, Drink Mixes 1.5×. Customers building complete kits — bundle for higher AOV.",
+      insight: "🚨 CRISIS INTENSIFIES: MRE Burrito Bowl demand nearly doubled month-over-month (1,199→2,196 d30) with cover at 0.8 days (60 oh). GI MRE Case at 1.4d, Genuine 1-Meal Pack at 0.7d. GOOD NEWS: MRE Entree line (Beef Stew, Jambalaya, Pasta, Mexican Beef) all restocked at healthy 235-323 oh — bundle these as the 'hurricane pantry' assortment. STOCKOUT KILLS: MRE Crackers 6-Pack (150 d30) and Snack Pack (118 d30) both went cold with 0 oh — 6-Pack accessory momentum from July is dead unless restocked.",
     },
   },
   {
@@ -68,98 +65,48 @@ const categories = [
     icon: "Package",
     urgency: "HIGH",
     color: "#f97316",
-    heatScore: 88,
-    summary: "MASSIVE new breakout: USMC Official PT Running Jacket — sold 300 units in 30 days after selling essentially none in the prior year (301 d90, 303 d365). Zero on hand now. Almost certainly a new SKU launch or discovery moment. 50 CAL Ammo Can still hot at 372 d30. Back-to-college spending on track to top $100B for the first time in 2026 — early signals in your data (Army Duffle Bag +1.9×, Multicam Assault 3-Day Pack +1.5×). Section 122 has expired; Section 301 (10–12.5%) is now the durable baseline.",
+    heatScore: 82,
+    summary: "Back-to-college move-in wave + fall gear signal both showing up in real data. USN Black Wool Watch Cap exploded: 101 units in 7 days vs 104 in 30 (4.16× pace, 39 oh) — clear fall/cold-weather demand. GI Army Laundry Barracks Bag broke out at 3.67× and is ALREADY OUT OF STOCK — pure back-to-college signal. University Bunkable Bed 1.9× (also OOS). Meanwhile: USMC PT Running Jacket (last month's 300-unit breakout) never got restocked and has DROPPED OFF the top 10 — the classic Flash Bang MOLLE Pouch failure pattern.",
     sellingNow: [
-      "🔥 USMC PT Running Jacket — 300 d30, 0 on hand (RESTOCK NOW)",
-      "50 CAL Ammo Cans — 372 d30, tight stock",
-      "1 Qt GI Canteens — 166 d30 steady",
-      "MOLLE / FILBE sustainment pouches",
-      "Military Issue Duffle Bags (back-to-college signal, 1.9× breakout)",
-      "Multicam Assault 3-Day MOLLE Backpack (1.5× breakout)",
+      "50 CAL Ammo Can (391 d30, well-stocked at 138 oh — good work)",
+      "USN Black Wool Watch Cap (104 d30, 4.16× breakout — restock priority)",
+      "GI Army Laundry Barracks Bag (56 d30, OOS — dorm move-in)",
+      "Coyote FILBE Sustainment Pouch (95 d30, 24 oh)",
+      "US Issue ACU Army Pants (144 d30, 10 oh — tight)",
+      "40MM PA120 Ammo Can (18 d30, 3.8× breakout)",
     ],
     sellingNext: [
-      "College dorm surplus — duffle bags, ALICE packs, footlockers, ruck sacks",
-      "Fall-weight camping & sleep systems",
-      "Boonie hats & warm-weather layers (heat wave still active)",
-      "Restocked USMC PT jacket + apparel breakouts",
+      "Fall gear ramp — wool watch caps, shemaghs, patrol caps, cold-weather layers",
+      "Back-to-college restock — laundry bags, duffle bags, dorm-friendly packs",
+      "Fall hunting camp gear (Labor Day → October rifle season)",
+      "Value bundles to compete with REI Labor Day sale (up to 40% off)",
     ],
-    whyNext: "The PT Running Jacket sold its entire annual quantity in 30 days — restock and there's a market. Back-to-college move-in weekends start Aug 15–30; surplus duffle bags and packs are already accelerating. Section 301's durability makes 'authentic surplus vs. inflated imports' the value story of the season.",
+    whyNext: "Meteorological fall starts tomorrow (Sept 1). Fall gear demand is real and early — the Wool Watch Cap 4.2× spike + Shemagh 2.8× spike are your leading indicators. REI/Cascade/Dometic are running 20-40% off Labor Day weekend — position surplus as durable value that doesn't need to be discounted.",
     marketingAngles: {
-      email: "Subject: 'RESTOCKED: USMC PT Running Jacket + college move-in surplus picks.' Feature the PT jacket restock alert; back-to-college duffle bag hero.",
-      social: "'This jacket sold out in 30 days — here's why.' Restock announcement reel + BTS surplus for college dorm content.",
-      ppc: "Bid up: 'usmc pt jacket,' 'military duffle bag,' '50 cal ammo can,' 'military canteen,' 'alice pack college.'",
-      sms: "USMC PT Jacket RESTOCK dropping this week. Sold out last month — get on the waitlist → [link].",
+      email: "Subject: 'Fall is landing early — Wool Watch Cap, Shemagh & laundry bag restocks.' Highlight back-to-college dorm essentials for late move-ins.",
+      social: "'What surplus customers are buying for fall (data from this week).' 4.2× breakout reel — Wool Watch Cap OOTD.",
+      ppc: "Bid up: 'wool watch cap,' 'military duffle bag,' 'shemagh scarf,' '50 cal ammo can,' 'military canteen college.'",
+      sms: "Fall gear breaking out — Wool Watch Caps, Shemaghs, laundry bags restocking → [link].",
     },
     storeData: {
       topSellers: [
-        { name: "50 CAL Ammo Can (storage box)", d30: 372, d90: 799 },
-        { name: "USMC Official PT Running Jacket (New)", d30: 300, d90: 301 },
-        { name: "1 Qt. GI Military Plastic Canteen", d30: 166, d90: 528 },
-        { name: "Military Issue Hydration GP MOLLE Pouch", d30: 86, d90: 212 },
-        { name: "Used MOLLE II ACU M4 Magazine Pouch", d30: 73, d90: 326 },
-        { name: "Coyote FILBE Sustainment Pouch", d30: 71, d90: 261 },
+        { name: "50 CAL Ammo Box Can 12×6×7.5in", d30: 391, d7: 7 },
+        { name: "U.S. Issue ACU Army Pant (Used) — M Reg", d30: 144, d7: 6 },
+        { name: "Used MOLLE II ACU M4 Magazine Pouch", d30: 97, d7: 9 },
+        { name: "Coyote FILBE Sustainment Pouch (Grade 2)", d30: 95, d7: 24 },
+        { name: "Assorted BDU Pant (Large)", d30: 80, d7: 0 },
+        { name: "Assorted BDU Jacket (Large)", d30: 80, d7: 0 },
       ],
       trending: [
-        { name: "USMC Official PT Running Jacket (New)", d7: 300, d30: 301, mult: 3.0 },
-        { name: "U.S. Army Military Issue Duffle Bag (Used)", d7: 49, d30: 79, mult: 1.9 },
-        { name: "Military Issue Multicam Assault 3-Day MOLLE Backpack", d7: 25, d30: 50, mult: 1.5 },
+        { name: "40MM PA120 Ammo Can (Used, 1-Pack)", d7: 16, d30: 18, mult: 3.8 },
+        { name: "US Issue Military LC-II Y Suspenders (Used)", d7: 8, d30: 11, mult: 3.1 },
+        { name: "2-Pack FILBE Sustainment Pouch", d7: 11, d30: 30, mult: 1.6 },
       ],
       cold: [
-        { name: "U.S. Issue Flash Bang MOLLE Pouch (June's dead breakout)", d7: 12, d30: 346 },
-        { name: "2-Pack Flash Bang MOLLE Pouch", d7: 6, d30: 173 },
+        { name: "Assorted BDU Pant (Large) — OOS", d7: 0, d30: 80 },
+        { name: "Assorted BDU Jacket (Large) — OOS", d7: 0, d30: 80 },
       ],
-      insight: "🔥 SINGLE-BIGGEST BREAKOUT OF THE YEAR: USMC PT Running Jacket went from ~0 sales to 300 in the last 30 days — 100% of annual volume this month. Zero on hand. Restock URGENTLY, feature front & center. Army Duffle Bag +1.9× and Multicam 3-Day Pack +1.5× — clear back-to-college signal. Flash Bang MOLLE Pouches (June's dead breakout) are the cautionary tale: never recovered from the stockout, now fading fast.",
-    },
-  },
-  {
-    id: "medical",
-    name: "Medical & Trauma",
-    icon: "HeartPulse",
-    urgency: "HIGH",
-    color: "#f97316",
-    heatScore: 78,
-    summary: "The trauma / IFAK cluster remains the store's most consistent multi-week breakout — 4 SKUs still accelerating 1.7–2.3× vs the 90-day baseline. LBT IFAK Combat First Aid Kit is the runaway leader (58 d30 vs 77 d90 = 2.3×). CAT Tourniquet at 51 d30 with 0 on hand. Pattern: this category shares buyers with your MRE / MOLLE customers who are building complete kits. Hurricane peak in 30 days and continued heat exposure keep injury-prep demand durable.",
-    sellingNow: [
-      "LBT IFAK Combat First Aid Kit (2.3× breakout — 58 d30)",
-      "CAT Tourniquets — 51 d30, OUT of stock",
-      "USMC Zipper IFAK First Aid Kit Pouch",
-      "OCP Multicam IFAK II Medical Pouch (2.1× breakout, OOS)",
-      "Maritime IFAK Combat First Aid Kit (2.0× breakout)",
-      "NAR C-A-T Tourniquet Holder (Grade 2)",
-    ],
-    sellingNext: [
-      "Complete IFAK builds bundled with MRE cases",
-      "Burn dressings + gauze for continued heat/cookout",
-      "Dorm first-aid kits (back-to-college crossover)",
-      "Restocked CAT Tourniquets + Multicam IFAK",
-    ],
-    whyNext: "IFAK build-out demand is durable, not seasonal — customers keep coming back for consumables (gauze, blankets, tourniquets). Hurricane peak + back-to-college dorm safety kits stack the demand over the next 6 weeks.",
-    marketingAngles: {
-      email: "Subject: 'Build the IFAK before hurricane peak.' Tourniquet + gauze + blanket bundles; dorm first-aid crossover for back-to-college.",
-      social: "'What's in a real IFAK' reel. Pair with 'college dorm first-aid essentials.'",
-      ppc: "Bid up: 'cat tourniquet,' 'ifak kit,' 'trauma kit,' 'college first aid kit,' 'burn dressing.'",
-      sms: "IFAK kits & CAT Tourniquets restocking this week. Hurricane peak in 30 days → [link].",
-    },
-    storeData: {
-      topSellers: [
-        { name: "Military Surplus IFAK Combat First Aid Kit (LBT — Expired)", d30: 58, d90: 77 },
-        { name: "CAT Tourniquet, Previously Issued", d30: 51, d90: 91 },
-        { name: "U.S. Issue OCP Multicam IFAK II Medical Pouch", d30: 30, d90: 43 },
-        { name: "USMC Zipper IFAK First Aid Kit Pouch", d30: 29, d90: 85 },
-        { name: "Maritime IFAK Combat First Aid Kit (Expired)", d30: 27, d90: 40 },
-        { name: "NAR C-A-T Tourniquet Holder (Grade 2)", d30: 26, d90: 52 },
-      ],
-      trending: [
-        { name: "Military Surplus IFAK Combat First Aid Kit (LBT)", d7: 58, d30: 77, mult: 2.3 },
-        { name: "U.S. Issue OCP Multicam IFAK II Medical Pouch", d7: 30, d30: 43, mult: 2.1 },
-        { name: "Maritime IFAK Combat First Aid Kit", d7: 27, d30: 40, mult: 2.0 },
-        { name: "CAT Tourniquet, Previously Issued", d7: 51, d30: 91, mult: 1.7 },
-      ],
-      cold: [
-        { name: "Military Issue MOLLE ACU Improved IFAK Pouch", d7: 11, d30: 83 },
-      ],
-      insight: "Trauma cluster still leading the store — 4 SKUs breaking out 1.7–2.3× vs 90-day baseline. LBT IFAK is at 2.3× with 14 oh (light cover). CAT Tourniquet at 51 d30 with ZERO on hand — restock priority. OCP Multicam IFAK II Medical Pouch stayed hot at 2.1× despite going OOS last week — real demand persists.",
+      insight: "50 CAL Ammo Can restocked to 138 oh — great work, demand held at 391 d30. Coyote FILBE Sustainment Pouch is quietly breaking out (24 d7 with only 24 oh — 3-day cover). BDU Pant + Jacket (Large) both at 80 d30 / 0 oh — restock both immediately, matched-set stockout. USN Wool Watch Cap and GI Laundry Bag are the two big signals of the week (see Breakouts panel).",
     },
   },
   {
@@ -168,47 +115,92 @@ const categories = [
     icon: "CloudLightning",
     urgency: "HIGH",
     color: "#f97316",
-    heatScore: 74,
-    summary: "Ongoing North American heat wave (70+ deaths attributed through Aug 5). Broad mid-level cyclonic flow across Great Lakes and Northeast Aug 10–14 keeps severe-storm risk elevated in that band. El Niño intensifying — heat and severe storms both expected to remain volatile through summer. Waterproofing SKUs are chronically stocked out — 4 of your 6 top weather sellers at 0 or 4 on hand.",
+    heatScore: 70,
+    summary: "Hurricane season peak Sept 10 (10 days out); 2 NHC disturbances at 50% development odds. Fall shoulder-season demand is emerging: Shemagh Desert Keffiyeh at 2.8× pace, ACU Poncho Liner steady. Waterproofing SKUs are chronically thin — Wet Weather Bag at 0 oh, Medium SealLine at 8 oh, FILBE Hydration at 12 oh (accelerating 3.6×). Labor Day weekend camping drives tarps, rain gear, hydration.",
     sellingNow: [
-      "USMC FILBE Coyote Hydration Pack (top seller, 2.3× breakout — OOS)",
-      "SealLine Medium & Large Waterproof Stuff Sacks",
-      "Hydration bladders (heat wave demand)",
-      "USMC MARPAT Wet Weather Tarp",
-      "New Poncho Liner Woodland (3.0× breakout)",
-      "Rain gear & wet-weather bags",
+      "USMC FILBE Coyote Hydration Pack (51 d30, 3.6× breakout on Grade 2 variant)",
+      "MAC Sacks Small SealLine Stuff Sack (36 d30)",
+      "US Issue Waterproof Wet Weather Bag (34 d30, OOS)",
+      "USMC MARPAT Wet Weather Tarp (steady)",
+      "Shemagh Desert Keffiyeh (2.8× breakout — fall signal)",
+      "ACU Poncho Liner (32 d30, restocked at 12 oh)",
     ],
     sellingNext: [
-      "Restocked FILBE & SealLine (chronic stockout hurting sales)",
-      "Hurricane-prep waterproofing bundles (Sept peak)",
-      "Camping tarps & shelter halves (fall camping)",
-      "Cold-weather layers as fall approaches",
+      "Hurricane-prep waterproofing (Sept 10 peak)",
+      "Labor Day camping — tarps, ponchos, rain gear",
+      "Fall/cold-weather shell layers as temps drop",
+      "Restocked Wet Weather Bag + SealLine stuff sacks",
     ],
-    whyNext: "Great Lakes / Northeast storm belt is in cyclonic-flow pattern through Wed-Fri. Hurricane peak coming Sept 10 will pull coastal-prep waterproofing. The Poncho Liner Woodland breakout (3× pace) hints at fall/camping demand starting.",
+    whyNext: "Hurricane peak is 10 days out — waterproofing demand will spike on any named-storm bulletin. Meteorological fall (Sept 1) drives Shemagh + poncho-liner + shell-jacket demand as customers layer up.",
     marketingAngles: {
-      email: "Subject: 'Heat wave + storm belt hits the Great Lakes / Northeast this week.' Hydration + waterproofing + weather radio bundle.",
-      social: "Split-screen: heat-wave map + severe-storm outlook. 'What to grab tonight' checklist.",
-      ppc: "Bid up: 'hydration pack,' 'weather radio,' 'poncho liner,' 'tarp heavy duty,' 'cooling towel.' Boost Great Lakes / NE geos.",
-      sms: "Heat wave + storms across GL/NE this week. Hydration & radios shipping today → [link].",
+      email: "Subject: 'Hurricane peak next week + fall gear landing.' Feature restocked ACU Poncho Liner, Shemagh, FILBE Hydration.",
+      social: "Split-screen: NHC map + fall-gear OOTD. 'Prep for both.'",
+      ppc: "Bid up: 'hydration pack,' 'poncho liner,' 'shemagh,' 'rain gear,' 'weather radio,' 'tarp heavy duty.'",
+      sms: "Hurricane peak in 10 days. Hydration, tarps, shell layers shipping today → [link].",
     },
     storeData: {
       topSellers: [
-        { name: "USMC FILBE Coyote Hydration Pack", d30: 65, d90: 147 },
-        { name: "USMC SealLine Medium Waterproof Stuff Sack", d30: 44, d90: 125 },
-        { name: "Military SealLine Large Main Pack Stuff Sack", d30: 44, d90: 128 },
-        { name: "Wide Mouth 100oz 3L Hydration Bladder", d30: 41, d90: 85 },
-        { name: "USMC MAC Sacks Small SealLine Stuff Sack", d30: 40, d90: 102 },
-        { name: "USMC MARPAT Wet Weather Tarp", d30: 33, d90: 90 },
+        { name: "USMC FILBE Coyote Hydration Pack", d30: 51, d7: 5 },
+        { name: "USMC MAC Sacks Small SealLine Stuff Sack", d30: 36, d7: 4 },
+        { name: "US Issue Waterproof Wet Weather Bag (OOS)", d30: 34, d7: 6 },
+        { name: "U.S. Army ACU Poncho Liner (Used)", d30: 32, d7: 6 },
+        { name: "USMC SealLine Medium Waterproof Stuff Sack", d30: 32, d7: 6 },
+        { name: "Military SealLine Large Main Pack Stuff Sack", d30: 32, d7: 6 },
       ],
       trending: [
-        { name: "New U.S. Issue Poncho Liner Woodland", d7: 10, d30: 10, mult: 3.0 },
-        { name: "USMC FILBE Coyote Hydration Pack (specific grade)", d7: 14, d30: 18, mult: 2.3 },
-        { name: "New O.D. 3L Hydration Bladder", d7: 15, d30: 23, mult: 2.0 },
+        { name: "USMC FILBE Coyote Hydration Pack (Grade 2)", d7: 5, d30: 6, mult: 3.6 },
+        { name: "Lightweight Shemagh Desert Keffiyeh Scarf (Olive)", d7: 9, d30: 14, mult: 2.8 },
+      ],
+      cold: [],
+      insight: "Fall-shoulder signal is real — Shemagh at 2.8× pace, FILBE Grade 2 variant at 3.6×. Waterproofing is chronically undersupplied: Wet Weather Bag at 0 oh, SealLine Medium at 8 oh. With hurricane peak in 10 days and Labor Day camping this weekend, restock waterproofing NOW.",
+    },
+  },
+  {
+    id: "medical",
+    name: "Medical & Trauma",
+    icon: "HeartPulse",
+    urgency: "MEDIUM",
+    color: "#eab308",
+    heatScore: 66,
+    summary: "Trauma cluster cooled significantly week-over-week — the 2-month breakout streak has paused. Most top medical SKUs show 0 orders in the last 7 days (Burn Dressing, USMC Zipper IFAK, IFAK Trauma Insert, Combat IFAK, Water-Jel Burn Dressing — all 0 d7 despite 69-74 d30). Multiple IFAK build-out SKUs at 0 on hand (IFAK Trauma Insert Advanced, Combat IFAK Advanced CLS) — likely stockout is what killed the pulse, not customer disinterest.",
+    sellingNow: [
+      "NAR C-A-T Tourniquet Holder (145 d30, 5 oh — tight)",
+      "NAR Dry Sterile Burn Dressing Combat Cravat (74 d30, 23 oh)",
+      "USMC Zipper IFAK First Aid Kit Pouch (70 d30, 35 oh)",
+      "IFAK Trauma Insert Kit — Advanced Build (69 d30, OOS)",
+      "Combat IFAK Trauma First Aid Kit — Advanced CLS (69 d30, OOS)",
+      "Military Tactical Burn Dressing 4×16 Water-Jel (69 d30, 12 oh)",
+    ],
+    sellingNext: [
+      "Restocked IFAK build-out kits (Advanced Build & CLS Build)",
+      "Fall hunting-camp trauma & first-aid kits",
+      "Hurricane-response trauma kits (Sept 10 peak)",
+      "Dorm first-aid kits (BTC crossover)",
+    ],
+    whyNext: "The IFAK build kits at 0 oh are your pressure points — customers building complete kits stopped mid-build. Restock the Advanced Build + CLS Build inserts. Hurricane peak + fall hunting season both drive trauma-kit demand in the next 4 weeks.",
+    marketingAngles: {
+      email: "Subject: 'IFAK build kits back in stock — hurricane & hunting season.' Bundle CAT Tourniquet + Holder + gauze + burn dressing.",
+      social: "'What's actually in a real IFAK' reel — feature the Advanced Build kit.",
+      ppc: "Bid up: 'ifak trauma kit,' 'cat tourniquet,' 'burn dressing,' 'hunting first aid.'",
+      sms: "IFAK build kits restocking. Advanced + CLS builds shipping → [link].",
+    },
+    storeData: {
+      topSellers: [
+        { name: "NAR C-A-T Tourniquet Holder (Grade 1)", d30: 145, d7: 1 },
+        { name: "NAR Dry Sterile Burn Dressing (Combat Cravat)", d30: 74, d7: 0 },
+        { name: "USMC Zipper IFAK First Aid Kit Pouch (Grade 1)", d30: 70, d7: 0 },
+        { name: "IFAK Trauma Insert Kit — Advanced Build", d30: 69, d7: 0 },
+        { name: "Combat IFAK Trauma First Aid Kit — Advanced CLS Build", d30: 69, d7: 0 },
+        { name: "Military Tactical Burn Dressing 4×16 Water-Jel", d30: 69, d7: 0 },
+      ],
+      trending: [
+        { name: "U.S. Issue Tan IFAK Pouch Insert (Used)", d7: 5, d30: 5, mult: 4.3 },
       ],
       cold: [
-        { name: "USMC MARPAT Poncho Liner with Zipper", d7: 4, d30: 30 },
+        { name: "NAR Dry Sterile Burn Dressing (with stock)", d7: 0, d30: 74 },
+        { name: "USMC Zipper IFAK First Aid Kit Pouch (with stock)", d7: 0, d30: 70 },
       ],
-      insight: "Chronic waterproofing stockout: 3 of the top 4 SKUs (FILBE Hydration, SealLine Medium, Hydration Bladder) at 0 on hand; SealLine Large at 4 oh. New Poncho Liner Woodland 3× breakout is a fall-camping signal. Heat wave keeps hydration hot. Restock waterproofing — you're leaving sales on the table.",
+      insight: "Trauma cluster paused this week — 5 top SKUs at 0 d7 despite ~70 d30 each. Two of the 5 (IFAK Advanced Build, Combat IFAK CLS) are OOS at 0 oh — stockout explains those. Other 3 have stock so demand is genuinely quieter this week (post-August-spike normalization). NAR C-A-T Tourniquet Holder at 145 d30 with only 5 oh — restock priority as hurricane peak approaches.",
     },
   },
   {
@@ -217,43 +209,41 @@ const categories = [
     icon: "Target",
     urgency: "MEDIUM",
     color: "#eab308",
-    heatScore: 66,
-    summary: "Category is still thin (80 SKUs, 113 d30) but back-to-college is the window: back-to-college spending on track to top $100B for the first time in 2026, and EDC trend for 2026 is 'minimalist preparedness' — practical flashlights, ferro rods, multi-tools. Rothco Police Whistle is the only real breakout at 1.5× pace. GI Type D-Cell Flashlight (8 d30) is OOS at 0 on hand.",
+    heatScore: 60,
+    summary: "Category still thin at 33 SKUs / 119 d30 / 24 d7. Back-to-college window peaked last week; assortment couldn't capitalize meaningfully. Rothco Police Whistle still leading (11 d30, 4 d7, restocked to 3 oh from prior 0). Ontario Knife SP16 SPAX went OOS. Streamlight Sidewinder went cold at 0 d7 despite 39 oh (post-August normalization).",
     sellingNow: [
-      "Rothco G.I. Style Police Whistle (1.5× breakout)",
-      "Streamlight Sidewinder Compact II (steady)",
-      "Gov Issue Gerber E-Tool Tri-fold shovel",
-      "Ontario Knife SP16 SPAX",
-      "GI Type D-Cell Flashlight (OOS at 0 oh)",
-      "UCO Survival Firestriker Ferro Rod (OOS)",
+      "Streamlight Sidewinder Compact II (13 d30, 39 oh — went cold this week)",
+      "US Issue ALICE Compass Pouch (12 d30, 6 oh)",
+      "Rothco G.I. Style Police Whistle (11 d30, 3 oh — tight)",
+      "18-inch MOLLE Machete Sheath (9 d30, 2 oh)",
+      "Classic Military Metal Compass (8 d30)",
+      "Ontario Knife SP16 SPAX (7 d30, OOS)",
     ],
     sellingNext: [
-      "Back-to-college EDC (Aug 15–Sep 1 move-in weekends)",
-      "Dorm-friendly ferro rods, whistles, small lights",
-      "Restocked GI D-Cell Flashlight & UCO Ferro Rod",
-      "Fall camping knives & fire-starting kits",
+      "Fall camping & hunting knives (September rifle prep)",
+      "Restocked Ontario SP16 & Machete Sheath",
+      "Labor Day weekend EDC picks",
+      "Fire starters / ferro rods as camp season peaks",
     ],
-    whyNext: "College move-in weekends run Aug 15–Sep 1. Practical / minimalist EDC (whistles, small lights, ferro rods) is dorm-appropriate and low-price-point — good for the value-conscious 2026 shopper.",
+    whyNext: "Fall camping season starts this weekend (Labor Day). Hunting knife / EDC light / fire-starter demand ramps into September–October. Category is genuinely under-assorted — expanding depth is the multi-week play.",
     marketingAngles: {
-      email: "Subject: 'College move-in EDC — practical picks under $30.' Dorm-safe whistles, small lights, ferro rods.",
-      social: "'The 5 EDC items for college freshmen' reel. Tie to safety + preparedness (not tactical fantasy).",
-      ppc: "Bid up: 'edc flashlight,' 'ferro rod,' 'college whistle,' 'dorm survival kit.' Prep back-to-college keyword sets.",
-      sms: "College move-in EDC: whistles, lights, ferro rods — practical picks → [link].",
+      email: "Subject: 'Labor Day EDC — fall camping picks.' Feature restocked whistle, machete sheath, compass.",
+      social: "'What EDC goes in your Labor Day camp kit' reel.",
+      ppc: "Bid up: 'edc knife,' 'camping knife,' 'edc flashlight,' 'ferro rod fall.'",
+      sms: "Labor Day camping EDC — knives, lights, ferro rods → [link].",
     },
     storeData: {
       topSellers: [
-        { name: "Rothco G.I. Style Police Whistle (OD)", d30: 20, d90: 40 },
-        { name: "Streamlight Sidewinder Compact II Military Light Kit", d30: 14, d90: 49 },
-        { name: "Gov Issue Gerber E-Tool Tri-fold Shovel", d30: 9, d90: 22 },
-        { name: "Ontario Knife SP16 SPAX, ACU", d30: 9, d90: 19 },
-        { name: "G.I. Type D-Cell Flashlight (OD)", d30: 8, d90: 13 },
-        { name: "UCO Survival Firestriker Ferro Rod", d30: 6, d90: 12 },
+        { name: "Streamlight Sidewinder Compact II (Used)", d30: 13, d7: 0 },
+        { name: "U.S. Issue ALICE Compass Pouch (Used)", d30: 12, d7: 2 },
+        { name: "Rothco G.I. Style Police Whistle (OD)", d30: 11, d7: 4 },
+        { name: "18-inch MOLLE Machete Sheath (OD)", d30: 9, d7: 3 },
+        { name: "Classic Military Style Metal Compass (OD)", d30: 8, d7: 0 },
+        { name: "Ontario Knife SP16 SPAX, ACU (OOS)", d30: 7, d7: 0 },
       ],
-      trending: [
-        { name: "Rothco G.I. Style Police Whistle", d7: 20, d30: 40, mult: 1.5 },
-      ],
+      trending: [],
       cold: [],
-      insight: "Category thin at 80 SKUs, 113 d30. Two OOS SKUs (D-Cell Flashlight, Ferro Rod) could be restock wins. Rothco Whistle finally landed at healthy 14 oh (past OOS cycles). Back-to-college window (Aug 15–Sep 1) is your best shot to grow this category — expand practical, low-cost EDC ($10–$30 price point).",
+      insight: "Category volume dropped further vs August (98→119 d30 total, but 24 d7 — lightest week in months). Streamlight Sidewinder went completely cold despite 39 oh — post-August EDC gift window fully closed. Ontario SP16 OOS. Category is under-assorted for fall — expand hunting knives, ferro rods, headlamps for the September–October camp/hunt window.",
     },
   },
 ];
@@ -262,80 +252,80 @@ const categories = [
 const heatData = categories.map((c) => ({ name: c.name.split(" —")[0].split(" /")[0], score: c.heatScore, fill: c.color }));
 
 const channelPriorityData = [
-  { channel: "Email", weather: 88, medical: 82, emergency: 98, edc: 78, surplus: 95 },
-  { channel: "Social", weather: 82, medical: 80, emergency: 88, edc: 80, surplus: 92 },
-  { channel: "PPC", weather: 92, medical: 82, emergency: 97, edc: 80, surplus: 92 },
-  { channel: "SMS", weather: 90, medical: 78, emergency: 98, edc: 72, surplus: 90 },
+  { channel: "Email", weather: 82, medical: 68, emergency: 98, edc: 68, surplus: 92 },
+  { channel: "Social", weather: 78, medical: 70, emergency: 85, edc: 72, surplus: 92 },
+  { channel: "PPC", weather: 88, medical: 72, emergency: 97, edc: 70, surplus: 90 },
+  { channel: "SMS", weather: 90, medical: 68, emergency: 98, edc: 62, surplus: 88 },
 ];
 
 const weeklyCalendar = [
-  { day: "Mon 8/10", action: "🚨 INTERNAL: Restock USMC PT Jacket (0 oh, 300 d30!), MRE Case, and 50 CAL Ammo Can. Launch heat-wave + hurricane-tracking email — NHC tracking 2 systems, 60% chance first develops this week." },
-  { day: "Tue 8/11", action: "Hurricane peak countdown — 30 days to Sept 10 climatological peak. Feature MRE case + 6-Pack accessories bundle (Crackers + Heaters + Drink Mixes)." },
-  { day: "Wed 8/12", action: "Back-to-college launch email — surplus duffle bag (1.9× breakout), Multicam 3-Day Pack (1.5× breakout), dorm IFAK. Move-in weekends start 8/15." },
-  { day: "Thu 8/13", action: "NHC update email — track the two developing systems. Emergency-kit bundle push to Gulf/Atlantic coast geos." },
-  { day: "Fri 8/14", action: "Weekend camping / hammock push — Lightweight Hammock Kit at 1.8× pace, 9 oh. New Poncho Liner Woodland restock announcement." },
-  { day: "Sat 8/15", action: "College move-in weekend kickoff SMS. Medical/IFAK dorm safety kit feature. Restock notice for USMC PT Jacket if it lands." },
-  { day: "Sun 8/16", action: "Pre-week hurricane prep long-form content. Tease college move-in wave for Aug 20+." },
+  { day: "Mon 8/31", action: "🚨 INTERNAL: Restock MRE Burrito Bowl (0.8d cover, 2196 d30!), USN Wool Watch Cap, GI Laundry Bag, Coyote FILBE Sustainment Pouch. Launch fall-signal email (Wool Cap 4.2× breakout, Shemagh 2.8×)." },
+  { day: "Tue 9/1", action: "Meteorological fall Day 1 — fall gear campaign kickoff: Wool caps, shemaghs, poncho liners, ACU pants. Restocked MRE Entree line bundle push." },
+  { day: "Wed 9/2", action: "Hurricane peak countdown email — 8 days to Sept 10. NHC status update on 2 disturbances. MRE case + water bundle to Gulf/Atlantic geos." },
+  { day: "Thu 9/3", action: "Back-to-college late-wave: dorm laundry bags, IFAK first-aid kits, whistles for freshmen still moving in. Restock announcement for GI Laundry Bag." },
+  { day: "Fri 9/4", action: "🎯 Labor Day Sale KICKOFF — compete with REI's 40% off with surplus value story. Feature 50 CAL Ammo Can, MOLLE pouches, canteens, tarps at value pricing." },
+  { day: "Sat 9/5", action: "Labor Day Saturday peak — SMS to full list. Camping + hurricane-prep double promo. Fall shell layers." },
+  { day: "Sun 9/6", action: "Labor Day Sunday — last-day flash on Labor Day sale. Tease Sept 10 hurricane-peak content for the following week." },
 ];
 
 const topKeywords = [
   { keyword: "hurricane prep kit", volume: "Very High", cpc: "$2.10", competition: "High", priority: "🔴" },
   { keyword: "mre case", volume: "High", cpc: "$1.30", competition: "Med", priority: "🔴" },
-  { keyword: "usmc pt jacket", volume: "Low (surging)", cpc: "$0.75", competition: "Low", priority: "🔴" },
-  { keyword: "noaa weather radio", volume: "High", cpc: "$1.15", competition: "Med", priority: "🔴" },
+  { keyword: "labor day camping sale", volume: "Very High", cpc: "$1.50", competition: "High", priority: "🔴" },
+  { keyword: "usn wool watch cap", volume: "Med (surging)", cpc: "$0.75", competition: "Low", priority: "🔴" },
+  { keyword: "military laundry bag", volume: "Med (rising)", cpc: "$0.65", competition: "Low", priority: "🟠" },
+  { keyword: "noaa weather radio", volume: "High", cpc: "$1.15", competition: "Med", priority: "🟠" },
   { keyword: "cat tourniquet", volume: "Med", cpc: "$1.20", competition: "Med", priority: "🟠" },
-  { keyword: "military duffle bag college", volume: "Med (rising)", cpc: "$0.85", competition: "Med", priority: "🟠" },
   { keyword: "50 cal ammo can", volume: "High", cpc: "$0.85", competition: "Med", priority: "🟠" },
-  { keyword: "college dorm first aid kit", volume: "Med (rising)", cpc: "$1.10", competition: "Med", priority: "🟠" },
-  { keyword: "hydration pack heat", volume: "High", cpc: "$1.30", competition: "Med", priority: "🟡" },
-  { keyword: "hammock camping kit", volume: "Med", cpc: "$0.80", competition: "Med", priority: "🟡" },
+  { keyword: "shemagh scarf", volume: "Med (rising)", cpc: "$0.70", competition: "Low", priority: "🟡" },
+  { keyword: "fall camping gear", volume: "High", cpc: "$1.30", competition: "High", priority: "🟡" },
 ];
 
 const tariffImpact = [
-  { item: "Section 301 baseline (60 countries, 10-12.5%)", tariff: "10-12.5%", priceImpact: "Durable — no sunset, no rate ceiling", action: "Long-term surplus positioning as tariff-insulated alternative" },
-  { item: "Boots & Leather Goods (China & Vietnam)", tariff: "30-70% CN stacked on Sec 301", priceImpact: "+10-25%; relief 'years away'", action: "Lean into genuine surplus boots as the value alternative" },
-  { item: "Field / Cargo Apparel (China & Vietnam)", tariff: "Stacked Sec 301 + country-specific", priceImpact: "+10-20% on imported soft goods", action: "Promote surplus apparel margin advantage — USMC PT Jacket breakout proof" },
-  { item: "EDC Knives, Lights & Multi-Tools (China)", tariff: "~30-42% stacked", priceImpact: "+15-25% on import-dependent SKUs", action: "Back-to-college surplus/value tier — expand assortment for Aug 15+" },
-  { item: "Medical / Trauma Consumables", tariff: "Country-specific stacked", priceImpact: "5-15% on gauze, bandages, tourniquets", action: "Bundle IFAK kits at higher AOV to absorb margin pressure" },
+  { item: "Section 301 baseline (60 countries, 10-12.5%)", tariff: "10-12.5%", priceImpact: "Durable — no sunset, no rate ceiling", action: "Position surplus as tariff-insulated value; Labor Day counter-messaging vs REI/Cascade" },
+  { item: "Boots & Leather Goods (China & Vietnam)", tariff: "30-70% CN stacked on Sec 301", priceImpact: "+10-25%; relief 'years away'", action: "Lean into surplus boots for fall/hunting season" },
+  { item: "Field / Cargo Apparel (China & Vietnam)", tariff: "Stacked Sec 301 + country-specific", priceImpact: "+10-20% on imported soft goods", action: "Push USN Wool Watch Cap, Shemagh, ACU pants as durable surplus alternatives" },
+  { item: "EDC Knives, Lights & Multi-Tools (China)", tariff: "~30-42% stacked", priceImpact: "+15-25% on import-dependent SKUs", action: "Expand tactical assortment for fall camp/hunt — under-assorted vs demand" },
+  { item: "Medical / Trauma Consumables", tariff: "Country-specific stacked", priceImpact: "5-15% on gauze, bandages, tourniquets", action: "Bundle IFAK Advanced + CLS builds at higher AOV; restock the 0-oh ones" },
 ];
 
-// ─── REAL STORE DATA: from the Aug 10, 2026 30-day sales forecasting report ────
+// ─── REAL STORE DATA: from the Aug 31, 2026 sales forecasting report ────
 
 const overallTopMovers = [
-  { name: "MRE Entree — Chicken Burrito Bowl", d30: 1199, d90: 3784, category: "Emergency" },
-  { name: "2026 GI MRE Case A or B", d30: 600, d90: 2077, category: "Emergency" },
-  { name: "MRE Entree GI Entree, Single Pack", d30: 444, d90: 1068, category: "Emergency" },
-  { name: "Genuine US Issue MRE — 1-Meal Pack", d30: 377, d90: 880, category: "Emergency" },
-  { name: "50 CAL Ammo Can (storage)", d30: 372, d90: 799, category: "Surplus" },
-  { name: "MRE Entree GI Entree, 2-Pack", d30: 370, d90: 890, category: "Emergency" },
-  { name: "USMC Official PT Running Jacket (New)", d30: 300, d90: 301, category: "Surplus" },
-  { name: "P-38 Can Opener — U.S. Shelby Co.", d30: 260, d90: 1240, category: "Emergency" },
-  { name: "Spiced Apples, Special (MRE)", d30: 222, d90: 534, category: "Emergency" },
-  { name: "2026 GI MRE A&B 2-Pack", d30: 188, d90: 590, category: "Emergency" },
+  { name: "MRE Entree — Chicken Burrito Bowl", d30: 2196, d7: 513, category: "Emergency" },
+  { name: "Spiced Apples, Special (MRE)", d30: 508, d7: 56, category: "Emergency" },
+  { name: "2026 GI MRE Case A or B", d30: 505, d7: 83, category: "Emergency" },
+  { name: "50 CAL Ammo Can (storage)", d30: 391, d7: 7, category: "Surplus" },
+  { name: "MISC (SKU catch-all)", d30: 358, d7: 0, category: "Other" },
+  { name: "MRE Entree — Beef Stew", d30: 277, d7: 36, category: "Emergency" },
+  { name: "MRE Chicken and Sausage Jambalaya", d30: 272, d7: 35, category: "Emergency" },
+  { name: "MRE Pasta w/ Marinara + Veggie Crumbles (Veg)", d30: 261, d7: 35, category: "Emergency" },
+  { name: "MRE Mexican Beef with Vegetables", d30: 260, d7: 34, category: "Emergency" },
+  { name: "MRE Entree Vegetarian Chili", d30: 254, d7: 28, category: "Emergency" },
 ];
 
 const breakouts = [
-  { name: "USMC Official PT Running Jacket (New)", d7: 300, d30: 301, mult: 3.0, category: "Surplus" },
-  { name: "6-Pack MRE Crackers and Breads", d7: 178, d30: 238, mult: 2.2, category: "Emergency" },
-  { name: "Hammock Lightweight Complete Kit (5ive Star)", d7: 121, d30: 201, mult: 1.8, category: "Other" },
-  { name: "MRE Heater Pack of 6", d7: 75, d30: 117, mult: 1.9, category: "Emergency" },
-  { name: "Military Surplus IFAK Combat First Aid Kit (LBT)", d7: 58, d30: 77, mult: 2.3, category: "Medical" },
-  { name: "U.S. Army Military Issue Duffle Bag (Used)", d7: 49, d30: 79, mult: 1.9, category: "Surplus" },
+  { name: "U.S. made Genuine USN Black Wool Watch Cap", d7: 101, d30: 104, mult: 4.2, category: "Surplus (Fall)" },
+  { name: "GI Army Issue Laundry Barracks Bag", d7: 48, d30: 56, mult: 3.7, category: "Surplus (BTC)" },
+  { name: "Used GI Army Laundry Barracks Bag — 2 Pack", d7: 24, d30: 28, mult: 3.7, category: "Surplus (BTC)" },
+  { name: "40MM PA120 Ammo Can (Used, 1-Pack)", d7: 16, d30: 18, mult: 3.8, category: "Surplus" },
+  { name: "Mini Cyalume Chemlight 1.5″, 4-Hour", d7: 15, d30: 15, mult: 4.3, category: "Other" },
+  { name: "University Bunkable Bed 39×80″", d7: 16, d30: 36, mult: 1.9, category: "Other (BTC)" },
 ];
 
 const outOfStockRisk = [
-  { name: "USMC Official PT Running Jacket (New)", oh: 0, d30: 300, cover: 0.0, status: "ALREADY OOS — massive breakout, restock ASAP" },
-  { name: "MRE Entree — Chicken Burrito Bowl", oh: 62, d30: 1199, cover: 1.6, status: "URGENT — your #1 seller, 3rd month of tight cover" },
-  { name: "Genuine US Issue MRE 1-Meal Pack", oh: 18, d30: 377, cover: 1.4, status: "URGENT — persistent OOS pattern" },
-  { name: "50 CAL Ammo Can (storage)", oh: 25, d30: 372, cover: 2.0, status: "URGENT — 2 days cover, still hot" },
-  { name: "2026 GI MRE Case A or B", oh: 88, d30: 600, cover: 4.4, status: "Improved but still tight — restock" },
-  { name: "P-38 Can Opener — U.S. Shelby Co.", oh: 52, d30: 260, cover: 6.0, status: "Watch — was previously OOS" },
-  { name: "MRE Entree GI Entree, 2-Pack", oh: 76, d30: 370, cover: 6.2, status: "Watch — accelerating category" },
+  { name: "MRE Entree — Chicken Burrito Bowl", oh: 60, d30: 2196, cover: 0.8, status: "SEVERE — 2× demand vs last month, no reorder" },
+  { name: "Genuine US Issue MRE 1-Meal Pack", oh: 6, d30: 249, cover: 0.7, status: "CRITICAL — chronic OOS pattern" },
+  { name: "2026 GI MRE Case A or B", oh: 24, d30: 505, cover: 1.4, status: "CRITICAL — hurricane peak in 10 days" },
+  { name: "Spiced Apples, Special (MRE)", oh: 35, d30: 508, cover: 2.1, status: "URGENT — new top-3 seller, no reorder" },
+  { name: "GI Army Laundry Barracks Bag", oh: 0, d30: 56, cover: 0.0, status: "ALREADY OOS — 3.7× BTC breakout" },
+  { name: "2026 GI MRE A&B 2-Pack", oh: 12, d30: 158, cover: 2.3, status: "URGENT — 2-3 days cover" },
+  { name: "NAR C-A-T Tourniquet Holder (Grade 1)", oh: 5, d30: 145, cover: 1.0, status: "CRITICAL — trauma restock priority" },
 ];
 
 // ─── COMPONENTS ────────────────────────────────────────────────────────────────
 
-const COLORS = ["#ef4444", "#f97316", "#f97316", "#f97316", "#eab308"];
+const COLORS = ["#ef4444", "#f97316", "#f97316", "#eab308", "#eab308"];
 
 const TabButton = ({ active, onClick, children, color }) => (
   <button
@@ -456,7 +446,7 @@ const CategoryDetail = ({ cat }) => {
         <div className="bg-gray-800 rounded-lg overflow-hidden border border-cyan-900/50">
           <button onClick={() => toggle("store")} className="w-full flex items-center justify-between p-3 hover:bg-gray-750">
             <span className="text-sm font-semibold text-cyan-300 flex items-center gap-2">
-              <Database size={14} /> YOUR STORE — REAL DATA (30-DAY + 90-DAY VELOCITY)
+              <Database size={14} /> YOUR STORE — REAL DATA (7-DAY + 30-DAY VELOCITY)
             </span>
             {expanded.store ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
           </button>
@@ -473,14 +463,14 @@ const CategoryDetail = ({ cat }) => {
                     <p className="text-xs text-gray-200 leading-relaxed"><strong className="text-cyan-300">INSIGHT:</strong> {cat.storeData.insight}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wide text-cyan-300 mb-2">Top sellers (30-day & 90-day orders)</p>
+                    <p className="text-xs font-bold uppercase tracking-wide text-cyan-300 mb-2">Top sellers (30-day & 7-day orders)</p>
                     <div className="bg-gray-900 rounded overflow-hidden">
                       <table className="w-full text-xs">
                         <thead>
                           <tr className="border-b border-gray-700 text-gray-500">
                             <th className="text-left p-2 font-medium">Product</th>
                             <th className="text-right p-2 font-medium">30d</th>
-                            <th className="text-right p-2 font-medium">90d</th>
+                            <th className="text-right p-2 font-medium">7d</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -488,7 +478,7 @@ const CategoryDetail = ({ cat }) => {
                             <tr key={i} className="border-b border-gray-800/50">
                               <td className="p-2 text-gray-200">{p.name}</td>
                               <td className="p-2 text-right text-white font-mono font-bold">{p.d30.toLocaleString()}</td>
-                              <td className="p-2 text-right text-gray-400 font-mono">{p.d90.toLocaleString()}</td>
+                              <td className="p-2 text-right text-gray-400 font-mono">{p.d7.toLocaleString()}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -497,12 +487,12 @@ const CategoryDetail = ({ cat }) => {
                   </div>
                   {cat.storeData.trending && cat.storeData.trending.length > 0 && (
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wide text-green-400 mb-2">🔥 Accelerating (30-day pace &gt; 90-day quarterly average)</p>
+                      <p className="text-xs font-bold uppercase tracking-wide text-green-400 mb-2">🔥 Accelerating (7-day pace &gt; 30-day average)</p>
                       <div className="space-y-1">
                         {cat.storeData.trending.map((p, i) => (
                           <div key={i} className="bg-green-950/30 border border-green-900/50 rounded p-2 flex items-center justify-between gap-2">
                             <span className="text-xs text-gray-200">{p.name}</span>
-                            <span className="text-xs font-mono text-green-400 font-bold whitespace-nowrap">{p.mult.toFixed(1)}× pace · 30d:{p.d7}</span>
+                            <span className="text-xs font-mono text-green-400 font-bold whitespace-nowrap">{p.mult.toFixed(1)}× pace · 7d:{p.d7}</span>
                           </div>
                         ))}
                       </div>
@@ -510,12 +500,12 @@ const CategoryDetail = ({ cat }) => {
                   )}
                   {cat.storeData.cold && cat.storeData.cold.length > 0 && (
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">❄ Fading (30-day pace well below 90-day)</p>
+                      <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">❄ Going cold (0 sold this week, was selling)</p>
                       <div className="space-y-1">
                         {cat.storeData.cold.map((p, i) => (
                           <div key={i} className="bg-gray-900 border border-gray-700/50 rounded p-2 flex items-center justify-between gap-2">
                             <span className="text-xs text-gray-300">{p.name}</span>
-                            <span className="text-xs font-mono text-gray-400 whitespace-nowrap">30d:{p.d7} · 90d:{p.d30}</span>
+                            <span className="text-xs font-mono text-gray-400 whitespace-nowrap">7d:{p.d7} · 30d:{p.d30}</span>
                           </div>
                         ))}
                       </div>
@@ -559,8 +549,8 @@ export default function ArmyNavyTrendDashboard() {
       <div className="bg-red-950 border border-red-800 rounded-lg p-3 mb-6 flex items-start gap-3">
         <AlertOctagon size={20} className="text-red-400 mt-0.5 flex-shrink-0" />
         <div>
-          <p className="text-sm font-bold text-red-300">CRITICAL — Massive PT Jacket Breakout + MRE Crisis Month 3 + NHC Tracking 2 Systems + Back-to-College Wave Starts 8/15</p>
-          <p className="text-xs text-red-400 mt-1">Four converging events: <strong>(1) USMC PT Running Jacket sold 300 units in 30 days (100% of annual volume) — now 0 on hand.</strong> Restock URGENTLY. <strong>(2) MRE crisis month 3</strong> — Burrito Bowl 1.6 days cover, 1-Meal Pack 1.4 days, 50 CAL Ammo Can 2.0 days. <strong>(3) NHC tracking two Atlantic systems</strong>, one with 60% chance of tropical depression in 7 days; peak Sept 10 (30 days out). <strong>(4) Back-to-college move-in starts Friday 8/15</strong> — $100B market for the first time in 2026. Duffle bag and Multicam 3-Day Pack already breaking out.</p>
+          <p className="text-sm font-bold text-red-300">CRITICAL — MRE Burrito Bowl at 0.8 Days Cover + Fall Signal Breaks Out + Labor Day Weekend + Hurricane Peak in 10 Days</p>
+          <p className="text-xs text-red-400 mt-1">Four converging events: <strong>(1) MRE Burrito Bowl demand DOUBLED month-over-month</strong> (1,199 → 2,196 d30) with 60 on hand — 0.8 days of cover, still no reorder. <strong>(2) Fall signal broke out</strong>: USN Black Wool Watch Cap 4.2× pace (101 units in 7 days), GI Army Laundry Bag 3.7× and already OOS (back-to-college), Shemagh 2.8×. <strong>(3) Labor Day weekend</strong> — REI/Cascade/Dometic running 20-40% off; compete with surplus value story. <strong>(4) Hurricane peak Sept 10</strong> — NHC watching 2 disturbances at 50% (Invest 95L + African tropical wave). USMC PT Jacket confirmed dead — the classic stockout-kills-demand pattern struck again.</p>
         </div>
       </div>
 
@@ -626,16 +616,16 @@ export default function ArmyNavyTrendDashboard() {
             <h2 className="text-lg font-bold mb-3 flex items-center gap-2"><Zap size={18} className="text-yellow-400" /> Top 3 Actions This Week</h2>
             <div className="space-y-3">
               <div className="bg-red-950/50 border border-red-800/50 rounded-lg p-3">
-                <p className="text-sm font-semibold text-red-300">1. 🚨 RESTOCK USMC PT Jacket + MREs + 50 CAL Ammo Can</p>
-                <p className="text-xs text-gray-300 mt-1">USMC PT Running Jacket sold 300 in 30 days (was near-zero all year), now 0 on hand — biggest breakout of the year. MRE Burrito Bowl 1.6d cover, 1-Meal Pack 1.4d, 50 CAL Ammo Can 2.0d. Hurricane peak in 30 days. If you don't restock this week, the demand disappears like Flash Bang MOLLE Pouch did in June.</p>
+                <p className="text-sm font-semibold text-red-300">1. 🚨 RESTOCK MRE Burrito Bowl + Genuine 1-Meal Pack + GI MRE Case + Wool Watch Cap</p>
+                <p className="text-xs text-gray-300 mt-1">Burrito Bowl demand DOUBLED to 2,196 d30 — you have 60 on hand (0.8 days cover) and no reorder placed. This is the biggest single OOS risk in store history. Also: Genuine 1-Meal 0.7d, GI MRE Case 1.4d, USN Wool Watch Cap 39 oh vs 4.2× breakout pace. Hurricane peak is 10 days away — if you don't restock this week, you lose the entire Sept 10 demand cycle.</p>
+              </div>
+              <div className="bg-red-950/50 border border-red-800/50 rounded-lg p-3">
+                <p className="text-sm font-semibold text-red-300">2. 🍂 Fall Signal + Back-to-College Wave — 3 New Breakouts</p>
+                <p className="text-xs text-gray-300 mt-1">USN Black Wool Watch Cap 4.2× (101 d7, 39 oh). GI Army Laundry Barracks Bag 3.7× (48 d7) — ALREADY OOS. Shemagh Desert Keffiyeh 2.8×. Fall gear demand is here early. Launch a fall-signal email TODAY featuring these SKUs; restock the Laundry Bag urgently for the tail end of college move-in.</p>
               </div>
               <div className="bg-orange-950/50 border border-orange-800/50 rounded-lg p-3">
-                <p className="text-sm font-semibold text-orange-300">2. Back-to-College Launch (Move-in weekends start Fri 8/15)</p>
-                <p className="text-xs text-gray-300 mt-1">Back-to-college on track for $100B for the first time in 2026. Your data already shows the signal: US Army Duffle Bag +1.9×, Multicam Assault 3-Day Pack +1.5×, Hammock Kit +1.8×. Launch a dorm-focused email + landing page this week: duffle + pack + IFAK + practical EDC (whistles, small lights, ferro rods, $10-$30 price point).</p>
-              </div>
-              <div className="bg-orange-950/50 border border-orange-800/50 rounded-lg p-3">
-                <p className="text-sm font-semibold text-orange-300">3. Hurricane Peak Countdown + MRE Accessory Bundling</p>
-                <p className="text-xs text-gray-300 mt-1">Sept 10 climatological peak is 30 days out; NHC tracking 2 systems, one with 60% chance of tropical depression in 7 days. Bundle MRE case + 6-Pack Crackers + Heaters + Drink Mixes as a single "hurricane pantry" SKU — accessory 6-packs are your persistent breakout cluster (2.2× / 1.9× / 1.5×).</p>
+                <p className="text-sm font-semibold text-orange-300">3. Labor Day Sale (Fri 9/4 – Mon 9/7) — Counter REI's 40% Off</p>
+                <p className="text-xs text-gray-300 mt-1">REI Labor Day sale runs 8/28–9/7 with up to 40% off; Cascade Designs 25% off camping; Dometic 20-40% off. Your play: don't discount, tell the "authentic surplus, tariff-insulated, no gimmicks" story. Feature 50 CAL Ammo Can (restocked), MOLLE pouches, canteens, MRE bundles at everyday prices — the value hook is durability + tariff-free.</p>
               </div>
             </div>
           </div>
@@ -676,15 +666,15 @@ export default function ArmyNavyTrendDashboard() {
 
             {/* Breakouts */}
             <div className="mb-4">
-              <h3 className="text-sm font-bold text-green-400 mb-2">🔥 Breakouts (30-day pace running well above 90-day quarterly average)</h3>
+              <h3 className="text-sm font-bold text-green-400 mb-2">🔥 Breakouts (7-day pace running well above 30-day average)</h3>
               <div className="bg-gray-950 rounded overflow-hidden">
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b border-gray-700 text-gray-500">
                       <th className="text-left p-2 font-medium">Product</th>
                       <th className="text-left p-2 font-medium">Category</th>
+                      <th className="text-right p-2 font-medium">7d</th>
                       <th className="text-right p-2 font-medium">30d</th>
-                      <th className="text-right p-2 font-medium">90d</th>
                       <th className="text-right p-2 font-medium">Lift</th>
                     </tr>
                   </thead>
@@ -714,7 +704,7 @@ export default function ArmyNavyTrendDashboard() {
                       <th className="text-left p-2 font-medium">Product</th>
                       <th className="text-left p-2 font-medium">Category</th>
                       <th className="text-right p-2 font-medium">30d</th>
-                      <th className="text-right p-2 font-medium">90d</th>
+                      <th className="text-right p-2 font-medium">7d</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -724,7 +714,7 @@ export default function ArmyNavyTrendDashboard() {
                         <td className="p-2 text-gray-200">{p.name}</td>
                         <td className="p-2 text-gray-400">{p.category}</td>
                         <td className="p-2 text-right text-white font-mono font-bold">{p.d30.toLocaleString()}</td>
-                        <td className="p-2 text-right text-gray-400 font-mono">{p.d90.toLocaleString()}</td>
+                        <td className="p-2 text-right text-gray-400 font-mono">{p.d7.toLocaleString()}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -733,7 +723,7 @@ export default function ArmyNavyTrendDashboard() {
             </div>
 
             <div className="bg-cyan-950/30 border border-cyan-800/50 rounded p-3 text-xs text-gray-300 leading-relaxed">
-              <strong className="text-cyan-300">Multi-week pattern (now 3+ months of data):</strong> Restock-fast-or-lose-demand is the store's single most consistent operational failure. Flash Bang MOLLE Pouches (June breakout → dead by August, now 12 d30 vs 346 d90). MRE Peanut Butter Spread (July breakout → cold now). The USMC PT Running Jacket at 300/301/303 (30d/90d/365d — all sales concentrated in the last month) is your NEW test case: restock or lose the market. On the positive side, P-38 Can Opener demand held after your restock (260 d30 vs 1,240 d90 — normalized). The pattern is clear: restock within 7 days of a breakout to preserve demand.
+              <strong className="text-cyan-300">Pattern update (4 months of data):</strong> The stockout-kills-demand cycle just claimed another victim — USMC PT Running Jacket (August's 300-unit breakout) is off the top 10 entirely, having never been restocked. Same fate as Flash Bang MOLLE Pouch (June), MRE PB Spread (July), MRE Crackers 6-Pack (this week). GOOD: the fall gear signal (USN Wool Watch Cap, Shemagh, Laundry Bag) is fresh and hasn't been broken by stockout yet — restock this week to preserve momentum. The MRE Entree line (Beef Stew, Jambalaya, Pasta, Mexican Beef, Vegetarian Chili) all restocked to healthy 235-323 oh — bundle these 5 as a "Hurricane Pantry Assortment" SKU for higher AOV. <strong>Note anomaly: Route Package Protection at -247 on hand</strong> — inventory system issue worth escalating.
             </div>
           </div>
         </div>
@@ -802,10 +792,10 @@ export default function ArmyNavyTrendDashboard() {
           <div className="bg-gray-900 rounded-xl p-4">
             <h3 className="text-sm font-bold text-gray-300 mb-2">Geo-Targeting Recommendations</h3>
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Hurricane Peak (Sept 10):</strong> <span className="text-gray-300">Gulf & Atlantic coast — TX, LA, FL, GA, SC, NC</span></div>
-              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Heat + Storms (This Week):</strong> <span className="text-gray-300">Great Lakes + Northeast — MI, OH, PA, NY, NJ</span></div>
-              <div className="bg-orange-950/30 rounded p-2"><strong className="text-orange-400">Back-to-College (Aug 15+):</strong> <span className="text-gray-300">College-town metros nationwide</span></div>
-              <div className="bg-yellow-950/30 rounded p-2"><strong className="text-yellow-400">Section 301 Value Message:</strong> <span className="text-gray-300">Nationwide — surplus / value-tier positioning</span></div>
+              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Hurricane Peak Sept 10:</strong> <span className="text-gray-300">Gulf & Atlantic coast — TX, LA, FL, GA, SC, NC</span></div>
+              <div className="bg-red-950/30 rounded p-2"><strong className="text-red-400">Fall Gear Signal:</strong> <span className="text-gray-300">Northern-tier states — MN, WI, MI, NY, PA, ME, VT, NH</span></div>
+              <div className="bg-orange-950/30 rounded p-2"><strong className="text-orange-400">Labor Day Camping:</strong> <span className="text-gray-300">Nationwide, boost mountain-west + Great Lakes</span></div>
+              <div className="bg-yellow-950/30 rounded p-2"><strong className="text-yellow-400">Back-to-College (Late Wave):</strong> <span className="text-gray-300">Late-start college towns (many still moving in)</span></div>
             </div>
           </div>
         </div>
@@ -816,7 +806,7 @@ export default function ArmyNavyTrendDashboard() {
         <div className="space-y-4">
           <h2 className="text-lg font-bold flex items-center gap-2"><AlertTriangle size={18} className="text-yellow-400" /> Tariff Impact Watch</h2>
           <div className="bg-gray-900/60 border border-gray-700 rounded-lg p-4 mb-2">
-            <p className="text-sm text-gray-300">Section 122 expired July 24. Section 301 (10% on 16 countries, 12.5% on 44) is now the durable baseline — <strong>no statutory expiration, no rate ceiling</strong>. The regime is settled; import pricing pressure is permanent.</p>
+            <p className="text-sm text-gray-300">Section 122 expired July 24. Section 301 (10% on 16 countries, 12.5% on 44) is now the durable baseline — <strong>no statutory expiration, no rate ceiling</strong>. Regime is settled; import pricing pressure is permanent. Labor Day competitor discounting (REI up to 40% off, Cascade 25%, Dometic 20-40%) is the narrower 2-week fight this week.</p>
           </div>
           <div className="bg-gray-900 rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
@@ -844,14 +834,14 @@ export default function ArmyNavyTrendDashboard() {
           </div>
           <div className="bg-yellow-950/30 border border-yellow-800/50 rounded-lg p-4">
             <h3 className="text-sm font-bold text-yellow-300 mb-2">Strategic Takeaway</h3>
-            <p className="text-sm text-gray-300">Your USMC PT Running Jacket breakout (300 d30 from ~0 baseline) is Exhibit A that the surplus-vs-import value story is working in real customer behavior. Section 301's permanence means this positioning holds indefinitely — no more "tariffs might sunset" hedging by importers. Aggressive back-to-college surplus positioning (duffle bags, packs, dorm essentials) capitalizes on both value pressure AND the growing $100B back-to-college market.</p>
+            <p className="text-sm text-gray-300">Labor Day is your chance to counter the discount wars with a story: authentic surplus is already 10-25% cheaper than imported equivalents once tariffs are applied, and the price is stable — no sale gimmicks needed. The USN Wool Watch Cap breakout (4.2× pace) is proof: customers are choosing surplus fall gear over imported. Feature the Fall Gear + MOLLE + Ammo Can + MRE assortment as the "no-gimmick value" alternative all weekend.</p>
           </div>
         </div>
       )}
 
       {/* Footer */}
       <div className="mt-8 pt-4 border-t border-gray-800 text-center">
-        <p className="text-xs text-gray-600">Army Navy Outdoors — Weekly Trend Intelligence | Generated {SCAN_DATE} | Sources: NOAA, NHC, SPC, AccuWeather, USTR (Section 301), NRF, Capital One Shopping, MNTN Research + internal sales forecasting report (4,833 SKUs)</p>
+        <p className="text-xs text-gray-600">Army Navy Outdoors — Weekly Trend Intelligence | Generated {SCAN_DATE} | Sources: NOAA, NHC, Yale Climate Connections, REI / Cascade Designs / Dometic (Labor Day sales), USTR (Section 301) + internal sales forecasting report (1,445 SKUs)</p>
       </div>
     </div>
   );
